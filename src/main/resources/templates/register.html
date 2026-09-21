@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LifeLink | Register</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/register.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <div class="background-image">
+
+        <img
+            src="/images/bg.png"
+            alt="LifeLink Background"
+        >
+
+    </div>
+
+
+    <div class="site-wrapper">
+
+
+        <!-- =====================================================
+             NAVIGATION BAR
+             ===================================================== -->
+
+        <header class="navbar">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="/"
+                class="logo-link"
+            >
+
+                <img
+                    src="/images/logo.png"
+                    alt="LifeLink Blood Logo"
+                    class="logo-image"
+                >
+
+                <span class="logo-text">
+                    LifeLink
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="nav-menu">
+
+
+                <a
+                    href="/"
+                    class="nav-link"
+                >
+                    HOME
+                </a>
+
+
+                <a
+                    href="/#about"
+                    class="nav-link"
+                >
+                    ABOUT
+                </a>
+
+
+                <a
+                    href="/#features"
+                    class="nav-link"
+                >
+                    FEATURES
+                </a>
+
+
+                <a
+                    href="/#contact"
+                    class="nav-link"
+                >
+                    CONTACT
+                </a>
+
+
+                <a
+                    href="/login"
+                    class="nav-link login-link"
+                >
+                    LOG IN
+                </a>
+
+
+            </nav>
+
+
+            <!-- THEME TOGGLE -->
+
+            <button
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle theme"
+            >
+
+                <span></span>
+
+            </button>
+
+
+        </header>
+
+
+        <!-- =====================================================
+             REGISTER PAGE
+             ===================================================== -->
+
+        <main class="register-page">
+
+
+            <section class="register-container">
+
+
+                <!-- =================================================
+                     LEFT SIDE — WELCOME VISUAL
+                     ================================================= -->
+
+                <div class="register-content">
+
+
+                    <img
+                        src="/images/welcome.png"
+                        alt="Welcome to LifeLink"
+                        class="welcome-image"
+                    >
+
+
+                </div>
+
+
+                <!-- =================================================
+                     RIGHT SIDE — REGISTER FORM
+                     ================================================= -->
+
+                <div class="register-right">
+
+
+                    <h1>
+                        Register
+                    </h1>
+
+
+                    <p>
+                        Create your account to get started.
+                    </p>
+
+
+                    <!-- =================================================
+                         REGISTER FORM
+                         ================================================= -->
+
+                    <form
+                        class="register-form"
+                        action="/register"
+                        method="post"
+                    >
+
+
+                        <!-- =========================================
+                             FIRST NAME + LAST NAME
+                             ========================================= -->
+
+                        <div class="form-row">
+
+
+                            <!-- FIRST NAME -->
+
+                            <div class="form-group">
+
+
+                                <label for="firstName">
+                                    First Name
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="Enter your first name"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="firstName-error"
+                                ></small>
+
+
+                            </div>
+
+
+                            <!-- LAST NAME -->
+
+                            <div class="form-group">
+
+
+                                <label for="lastName">
+                                    Last Name
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="Enter your last name"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="lastName-error"
+                                ></small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             USERNAME
+                             ========================================= -->
+
+                        <div class="form-group">
+
+
+                            <label for="username">
+                                Username
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                required
+                            >
+
+
+                            <small
+                                class="error-message"
+                                id="username-error"
+                            ></small>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             HIDDEN ADMIN CODE
+                             ========================================= -->
+
+                        <input
+                            type="hidden"
+                            id="adminCode"
+                            name="adminCode"
+                            value=""
+                        >
+
+
+                        <!-- =========================================
+                             PASSWORD + CONFIRM PASSWORD
+                             ========================================= -->
+
+                        <div class="form-row">
+
+
+                            <!-- PASSWORD -->
+
+                            <div class="form-group">
+
+
+                                <label for="password">
+                                    Password
+                                </label>
+
+
+                                <div class="password-wrapper">
+
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Create a password"
+                                        minlength="8"
+                                        maxlength="30"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        id="toggle-password"
+                                        class="toggle-password"
+                                        aria-label="Show password"
+                                    >
+                                        👁
+                                    </button>
+
+
+                                </div>
+
+
+                                <small
+                                    class="error-message"
+                                    id="password-error"
+                                ></small>
+
+
+                            </div>
+
+
+                            <!-- CONFIRM PASSWORD -->
+
+                            <div class="form-group">
+
+
+                                <label for="confirmPassword">
+                                    Confirm Password
+                                </label>
+
+
+                                <div class="password-wrapper">
+
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        placeholder="Confirm your password"
+                                        minlength="8"
+                                        maxlength="30"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        id="toggle-confirm-password"
+                                        class="toggle-password"
+                                        aria-label="Show confirm password"
+                                    >
+                                        👁
+                                    </button>
+
+
+                                </div>
+
+
+                                <small
+                                    class="error-message"
+                                    id="confirmPassword-error"
+                                ></small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             PHONE + BLOOD TYPE
+                             ========================================= -->
+
+                        <div class="form-row">
+
+
+                            <!-- PHONE NUMBER -->
+
+                            <div class="form-group">
+
+
+                                <label for="phoneNumber">
+                                    Phone Number
+                                </label>
+
+
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    placeholder="Enter your phone number"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="phoneNumber-error"
+                                ></small>
+
+
+                            </div>
+
+
+                            <!-- BLOOD TYPE -->
+
+                            <div class="form-group">
+
+
+                                <label for="bloodType">
+                                    Blood Type
+                                </label>
+
+
+                                <select
+                                    id="bloodType"
+                                    name="bloodType"
+                                    required
+                                >
+
+
+                                    <option
+                                        value=""
+                                        selected
+                                        disabled
+                                    >
+                                        Select your blood type
+                                    </option>
+
+
+                                    <option value="A+">
+                                        A+
+                                    </option>
+
+
+                                    <option value="A-">
+                                        A-
+                                    </option>
+
+
+                                    <option value="B+">
+                                        B+
+                                    </option>
+
+
+                                    <option value="B-">
+                                        B-
+                                    </option>
+
+
+                                    <option value="AB+">
+                                        AB+
+                                    </option>
+
+
+                                    <option value="AB-">
+                                        AB-
+                                    </option>
+
+
+                                    <option value="O+">
+                                        O+
+                                    </option>
+
+
+                                    <option value="O-">
+                                        O-
+                                    </option>
+
+
+                                </select>
+
+
+                                <small
+                                    class="error-message"
+                                    id="bloodType-error"
+                                ></small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             TERMS AND CONDITIONS
+                             ========================================= -->
+
+                        <div class="terms-options">
+
+
+                            <label class="terms-label">
+
+
+                                <input
+                                    type="checkbox"
+                                    name="terms"
+                                    id="terms"
+                                    required
+                                >
+
+
+                                <span>
+                                    I agree to the
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="terms-link"
+                                    id="view-terms"
+                                >
+                                    Terms and Conditions
+                                </button>
+
+
+                                <span>
+                                    and
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="terms-link"
+                                    id="view-privacy"
+                                >
+                                    Privacy Policy
+                                </button>
+
+
+                            </label>
+
+
+                            <small
+                                class="error-message"
+                                id="terms-error"
+                            ></small>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             REGISTER BUTTON
+                             ========================================= -->
+
+                        <button
+                            type="submit"
+                            class="register-button"
+                        >
+
+                            👥 &nbsp; REGISTER
+
+                        </button>
+
+
+                        <!-- =========================================
+                             DIVIDER
+                             ========================================= -->
+
+                        <div class="register-divider">
+
+
+                            <span></span>
+
+
+                            <b>
+                                or
+                            </b>
+
+
+                            <span></span>
+
+
+                        </div>
+
+
+                        <!-- =========================================
+                             LOGIN LINK
+                             ========================================= -->
+
+                        <div class="register-link">
+
+
+                            <span>
+                                👤 + &nbsp; Already have an account?
+                            </span>
+
+
+                            <a href="/login">
+                                Login here
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         TERMS AND CONDITIONS MODAL
+         ========================================================= -->
+
+    <div
+        class="terms-modal"
+        id="terms-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="terms-title"
+    >
+
+
+        <div class="terms-modal-content">
+
+
+            <button
+                type="button"
+                class="terms-modal-close"
+                id="close-terms"
+                aria-label="Close Terms and Conditions"
+            >
+                ×
+            </button>
+
+
+            <h2 id="terms-title">
+                LifeLink Terms and Conditions
+            </h2>
+
+
+            <p>
+
+                <strong>
+                    Effective Date: August 14, 2026
+                </strong>
+
+            </p>
+
+
+            <p>
+                Welcome to LifeLink, a Blood Donation Management System
+                designed to help manage donor information, donor eligibility,
+                and blood donation records. By creating and using a LifeLink
+                account, you agree to the following Terms and Conditions.
+            </p>
+
+
+            <h3>
+                1. Use of LifeLink
+            </h3>
+
+
+            <p>
+                Users must provide accurate and complete information when
+                creating an account. Users are responsible for keeping their
+                username and password secure and must not share their account
+                with others.
+            </p>
+
+
+            <h3>
+                2. Donor Information
+            </h3>
+
+
+            <p>
+                Users are responsible for providing correct personal and
+                donation-related information.
+            </p>
+
+
+            <h3>
+                3. Donor Eligibility
+            </h3>
+
+
+            <p>
+                LifeLink may provide or record donor eligibility information.
+                However, the system does not replace professional medical
+                assessment.
+            </p>
+
+
+            <h3>
+                4. Acceptable Use
+            </h3>
+
+
+            <p>
+                Users must not use LifeLink to provide false information,
+                access another person's account, misuse the system, or attempt
+                to damage or interfere with the system.
+            </p>
+
+
+            <h3>
+                5. Account Security
+            </h3>
+
+
+            <p>
+                Users are responsible for protecting their login information.
+            </p>
+
+
+            <h3>
+                6. System Availability
+            </h3>
+
+
+            <p>
+                LifeLink may occasionally be unavailable because of maintenance,
+                updates, or technical problems.
+            </p>
+
+
+            <h3>
+                7. Changes to These Terms
+            </h3>
+
+
+            <p>
+                LifeLink may update these Terms and Conditions when necessary.
+            </p>
+
+
+            <h3>
+                8. Acceptance
+            </h3>
+
+
+            <p>
+                By registering for and using LifeLink, you confirm that you
+                have read, understood, and agreed to these Terms and
+                Conditions.
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         PRIVACY POLICY MODAL
+         ========================================================= -->
+
+    <div
+        class="terms-modal"
+        id="privacy-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="privacy-title"
+    >
+
+
+        <div class="terms-modal-content">
+
+
+            <button
+                type="button"
+                class="terms-modal-close"
+                id="close-privacy"
+                aria-label="Close Privacy Policy"
+            >
+                ×
+            </button>
+
+
+            <h2 id="privacy-title">
+                LifeLink Privacy Policy
+            </h2>
+
+
+            <p>
+
+                <strong>
+                    Effective Date: August 14, 2026
+                </strong>
+
+            </p>
+
+
+            <p>
+                LifeLink respects your privacy and is committed to protecting
+                the personal information you provide when using our Blood
+                Donation Management System.
+            </p>
+
+
+            <h3>
+                1. Information We Collect
+            </h3>
+
+
+            <ul>
+
+                <li>
+                    First and last name
+                </li>
+
+                <li>
+                    Username
+                </li>
+
+                <li>
+                    Password
+                </li>
+
+                <li>
+                    Phone number
+                </li>
+
+                <li>
+                    Blood type
+                </li>
+
+                <li>
+                    Donor eligibility information
+                </li>
+
+                <li>
+                    Donation history
+                </li>
+
+                <li>
+                    Account and system activity
+                </li>
+
+            </ul>
+
+
+            <h3>
+                2. How We Use Your Information
+            </h3>
+
+
+            <p>
+                The information collected may be used to create and manage your
+                LifeLink account and maintain donation records.
+            </p>
+
+
+            <h3>
+                3. Protection of Your Information
+            </h3>
+
+
+            <p>
+                LifeLink takes reasonable steps to protect your personal
+                information from unauthorized access.
+            </p>
+
+
+            <h3>
+                4. Sharing of Information
+            </h3>
+
+
+            <p>
+                LifeLink will not intentionally sell your personal information.
+            </p>
+
+
+            <h3>
+                5. Your Responsibility
+            </h3>
+
+
+            <p>
+                Users should keep their usernames and passwords private.
+            </p>
+
+
+            <h3>
+                6. Data Retention
+            </h3>
+
+
+            <p>
+                Personal and donation information may be stored as necessary
+                to provide LifeLink's services.
+            </p>
+
+
+            <h3>
+                7. Changes to This Privacy Policy
+            </h3>
+
+
+            <p>
+                This Privacy Policy may be updated when necessary.
+            </p>
+
+
+            <h3>
+                8. Your Consent
+            </h3>
+
+
+            <p>
+                By creating a LifeLink account, you acknowledge that you have
+                read and understood this Privacy Policy.
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         ADMIN REGISTRATION CONFIRMATION MODAL
+         ========================================================= -->
+
+    <div
+        class="admin-confirmation-modal"
+        id="admin-confirmation-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="admin-confirmation-title"
+    >
+
+
+        <div class="admin-confirmation-box">
+
+
+            <!-- HEADER -->
+
+            <div class="admin-confirmation-header">
+
+
+                <div class="admin-confirmation-icon">
+                    🔐
+                </div>
+
+
+                <div>
+
+
+                    <h2 id="admin-confirmation-title">
+                        Admin Registration
+                    </h2>
+
+
+                    <p>
+                        Administrator verification required
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="admin-confirmation-body">
+
+
+                <p>
+                    This username contains a number.
+                </p>
+
+
+                <p>
+                    To continue registering this account as an
+                    <strong>ADMIN</strong>, please enter the authorized
+                    Admin Registration Code.
+                </p>
+
+
+                <div class="admin-code-group">
+
+
+                    <label for="admin-confirmation-code">
+                        Admin Registration Code
+                    </label>
+
+
+                    <div class="admin-code-wrapper">
+
+
+                        <input
+                            type="password"
+                            id="admin-confirmation-code"
+                            placeholder="Enter admin code"
+                            autocomplete="off"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="toggle-admin-code"
+                            class="toggle-admin-code"
+                            aria-label="Show admin code"
+                        >
+                            👁
+                        </button>
+
+
+                    </div>
+
+
+                    <small
+                        class="admin-code-error"
+                        id="admin-code-error"
+                    ></small>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="admin-confirmation-actions">
+
+
+                <button
+                    type="button"
+                    id="cancel-admin-confirmation"
+                    class="admin-cancel-button"
+                >
+                    CANCEL
+                </button>
+
+
+                <button
+                    type="button"
+                    id="confirm-admin-registration"
+                    class="admin-confirm-button"
+                >
+                    CONFIRM
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         REGISTRATION SUCCESS MODAL
+         ========================================================= -->
+
+    <div
+        class="registration-success-modal"
+        id="registration-success-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="registration-success-title"
+    >
+
+
+        <div class="registration-success-box">
+
+
+            <!-- SUCCESS ICON -->
+
+            <div class="registration-success-icon">
+                ✓
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h2 id="registration-success-title">
+                Registration Successful!
+            </h2>
+
+
+            <!-- MESSAGE -->
+
+            <p>
+                Your LifeLink account has been successfully created.
+            </p>
+
+
+            <p>
+                You can now log in using your username and password.
+            </p>
+
+
+            <!-- GO TO LOGIN -->
+
+            <button
+                type="button"
+                id="go-to-login"
+                class="go-to-login-button"
+            >
+                GO TO LOG IN
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LifeLink | Register</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/register.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <div class="background-image">
+
+        <img
+            src="/images/bg.png"
+            alt="LifeLink Background"
+        >
+
+    </div>
+
+
+
+    <div class="site-wrapper">
+
+
+        <!-- =====================================================
+             NAVIGATION BAR
+             ===================================================== -->
+
+        <header class="navbar">
+
+
+            <a
+                href="/"
+                class="logo-link"
+            >
+
+                <img
+                    src="/images/logo.png"
+                    alt="LifeLink Blood Logo"
+                    class="logo-image"
+                >
+
+                <span class="logo-text">
+                    LifeLink
+                </span>
+
+            </a>
+
+
+
+            <nav class="nav-menu">
+
+                <a
+                    href="/"
+                    class="nav-link"
+                >
+                    HOME
+                </a>
+
+
+                <a
+                    href="/#about"
+                    class="nav-link"
+                >
+                    ABOUT
+                </a>
+
+
+                <a
+                    href="/#features"
+                    class="nav-link"
+                >
+                    FEATURES
+                </a>
+
+
+                <a
+                    href="/#contact"
+                    class="nav-link"
+                >
+                    CONTACT
+                </a>
+
+
+                <a
+                    href="/login"
+                    class="nav-link login-link"
+                >
+                    LOG IN
+                </a>
+
+            </nav>
+
+
+
+            <button
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle theme"
+            >
+
+                <span></span>
+
+            </button>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             REGISTER PAGE
+             ===================================================== -->
+
+        <main class="register-page">
+
+
+            <section class="register-container">
+
+
+                <!-- LEFT SIDE -->
+
+                <div class="register-content">
+
+                    <img
+                        src="/images/welcome.png"
+                        alt="Welcome to LifeLink"
+                        class="welcome-image"
+                    >
+
+                </div>
+
+
+
+                <!-- RIGHT SIDE -->
+
+                <div class="register-right">
+
+
+                    <h1>
+                        Register
+                    </h1>
+
+
+                    <p>
+                        Create your account to get started.
+                    </p>
+
+
+
+                    <!-- REGISTER FORM -->
+
+                    <form
+                        class="register-form"
+                        action="/register"
+                        method="post"
+                    >
+
+
+                        <!-- FIRST NAME + LAST NAME -->
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label for="firstName">
+                                    First Name
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="Enter your first name"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="firstName-error"
+                                ></small>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label for="lastName">
+                                    Last Name
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="Enter your last name"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="lastName-error"
+                                ></small>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- USERNAME -->
+
+                        <div class="form-group">
+
+                            <label for="username">
+                                Username
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                required
+                            >
+
+
+                            <small
+                                class="error-message"
+                                id="username-error"
+                            ></small>
+
+                        </div>
+
+
+
+                        <!-- HIDDEN ADMIN CODE -->
+
+                        <input
+                            type="hidden"
+                            id="adminCode"
+                            name="adminCode"
+                            value=""
+                        >
+
+
+
+                        <!-- PASSWORD ROW -->
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label for="password">
+                                    Password
+                                </label>
+
+
+                                <div class="password-wrapper">
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Create a password"
+                                        minlength="8"
+                                        maxlength="30"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        id="toggle-password"
+                                        class="toggle-password"
+                                    >
+                                        👁
+                                    </button>
+
+                                </div>
+
+
+                                <small
+                                    class="error-message"
+                                    id="password-error"
+                                ></small>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label for="confirmPassword">
+                                    Confirm Password
+                                </label>
+
+
+                                <div class="password-wrapper">
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        placeholder="Confirm your password"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        id="toggle-confirm-password"
+                                        class="toggle-password"
+                                    >
+                                        👁
+                                    </button>
+
+                                </div>
+
+
+                                <small
+                                    class="error-message"
+                                    id="confirmPassword-error"
+                                ></small>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PHONE + BLOOD TYPE -->
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label for="phoneNumber">
+                                    Phone Number
+                                </label>
+
+
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    placeholder="Enter your phone number"
+                                    required
+                                >
+
+
+                                <small
+                                    class="error-message"
+                                    id="phoneNumber-error"
+                                ></small>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label for="bloodType">
+                                    Blood Type
+                                </label>
+
+
+                                <select
+                                    id="bloodType"
+                                    name="bloodType"
+                                    required
+                                >
+
+                                    <option
+                                        value=""
+                                        selected
+                                        disabled
+                                    >
+                                        Select your blood type
+                                    </option>
+
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+
+                                </select>
+
+
+                                <small
+                                    class="error-message"
+                                    id="bloodType-error"
+                                ></small>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- TERMS -->
+
+                        <div class="terms-options">
+
+
+                            <label class="terms-label">
+
+                                <input
+                                    type="checkbox"
+                                    name="terms"
+                                    id="terms"
+                                    required
+                                >
+
+
+                                <span>
+                                    I agree to the
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="terms-link"
+                                    id="view-terms"
+                                >
+                                    Terms and Conditions
+                                </button>
+
+
+                                <span>
+                                    and
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="terms-link"
+                                    id="view-privacy"
+                                >
+                                    Privacy Policy
+                                </button>
+
+                            </label>
+
+
+                            <small
+                                class="error-message"
+                                id="terms-error"
+                            ></small>
+
+                        </div>
+
+
+
+                        <!-- REGISTER BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="register-button"
+                        >
+                            👥 &nbsp; REGISTER
+                        </button>
+
+
+
+                        <!-- DIVIDER -->
+
+                        <div class="register-divider">
+
+                            <span></span>
+
+                            <b>
+                                or
+                            </b>
+
+                            <span></span>
+
+                        </div>
+
+
+
+                        <!-- LOGIN LINK -->
+
+                        <div class="register-link">
+
+                            <span>
+                                👤 + &nbsp; Already have an account?
+                            </span>
+
+
+                            <a href="/login">
+                                Login here
+                            </a>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TERMS MODAL
+         ===================================================== -->
+
+    <div
+        class="terms-modal"
+        id="terms-modal"
+    >
+
+        <div class="terms-modal-content">
+
+            <button
+                type="button"
+                class="terms-modal-close"
+                id="close-terms"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                LifeLink Terms and Conditions
+            </h2>
+
+
+            <p>
+                By creating and using a LifeLink account,
+                you agree to the Terms and Conditions of the system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PRIVACY MODAL
+         ===================================================== -->
+
+    <div
+        class="terms-modal"
+        id="privacy-modal"
+    >
+
+        <div class="terms-modal-content">
+
+            <button
+                type="button"
+                class="terms-modal-close"
+                id="close-privacy"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                LifeLink Privacy Policy
+            </h2>
+
+
+            <p>
+                LifeLink respects your privacy and protects
+                the information provided through the system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ADMIN CONFIRMATION MODAL
+         ===================================================== -->
+
+    <div
+        class="admin-confirmation-modal"
+        id="admin-confirmation-modal"
+    >
+
+        <div class="admin-confirmation-box">
+
+
+            <div class="admin-confirmation-header">
+
+                <div class="admin-confirmation-icon">
+                    🔐
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Admin Registration
+                    </h2>
+
+
+                    <p>
+                        Administrator verification required
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="admin-confirmation-body">
+
+
+                <p>
+                    This username contains a number.
+                </p>
+
+
+                <p>
+                    To continue registering this account as an
+                    <strong>ADMIN</strong>, please enter the authorized
+                    Admin Registration Code.
+                </p>
+
+
+                <div class="admin-code-group">
+
+                    <label for="admin-confirmation-code">
+                        Admin Registration Code
+                    </label>
+
+
+                    <div class="admin-code-wrapper">
+
+                        <input
+                            type="password"
+                            id="admin-confirmation-code"
+                            placeholder="Enter admin code"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="toggle-admin-code"
+                            class="toggle-admin-code"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+
+                    <small
+                        class="admin-code-error"
+                        id="admin-code-error"
+                    ></small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="admin-confirmation-actions">
+
+
+                <button
+                    type="button"
+                    id="cancel-admin-confirmation"
+                    class="admin-cancel-button"
+                >
+                    CANCEL
+                </button>
+
+
+                <button
+                    type="button"
+                    id="confirm-admin-registration"
+                    class="admin-confirm-button"
+                >
+                    CONFIRM
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         REGISTRATION SUCCESS MODAL
+         ===================================================== -->
+
+    <div
+        class="registration-success-modal"
+        id="registration-success-modal"
+    >
+
+        <div class="registration-success-box">
+
+
+            <div class="registration-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Registration Successful!
+            </h2>
+
+
+            <p>
+                Your LifeLink account has been successfully created.
+            </p>
+
+
+            <p>
+                You can now log in using your username and password.
+            </p>
+
+
+            <button
+                type="button"
+                id="go-to-login"
+                class="go-to-login-button"
+            >
+                GO TO LOG IN
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="/js/register.js"></script>
+
+    <script src="/js/theme.js"></script>
+
+
+</body>
+
+</html>
+    <script src="/js/register.js"></script>
+
+    <script src="/js/theme.js"></script>
+
+
+</body>
+
+</html>

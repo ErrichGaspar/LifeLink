@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink | Donor Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/donors.css">
+</head>
+<body class="dashboard-page donors-page">
+<div class="background-image"><img src="/images/bg.png" alt=""></div>
+<div class="site-wrapper">
+    <header class="navbar dashboard-navbar">
+        <a href="/" class="logo-link"><img src="/images/logo.png" alt="LifeLink" class="logo-image"><span class="logo-text">LifeLink</span></a>
+        <nav class="nav-menu"><a href="/" class="nav-link">HOME</a><a href="/#about" class="nav-link">ABOUT</a><a href="/#features" class="nav-link">FEATURES</a><a href="/#contact" class="nav-link">CONTACT</a></nav>
+        <div class="dashboard-header-actions"><button class="theme-toggle" type="button" aria-label="Toggle dark mode"><span></span></button></div>
+    </header>
+
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="donor-profile">
+                <div class="big-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="profile-copy"><h3 th:text="${firstName != null ? firstName : (admin ? 'Admin' : 'Donor')}">Donor</h3><p th:text="${admin ? 'Administrator' : 'Donor account'}">Donor account</p></div>
+            </div>
+            <nav class="menu">
+                <a href="/dashboard"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+                <a href="/donors" class="active"><i class="fa-solid fa-users"></i><span th:text="${admin ? 'Donor Management' : 'Donor Information'}">Donor Information</span></a>
+                <a href="/assessment"><i class="fa-solid fa-heart-pulse"></i><span>Eligibility / Status</span></a>
+                <a href="/donation"><i class="fa-solid fa-calendar-days"></i><span>Schedule Donation</span></a>
+                <a href="/reports"><i class="fa-solid fa-file-lines"></i><span>Donation History</span></a>
+            </nav>
+            <a href="/logout" class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+        </aside>
+
+        <main class="content donor-content">
+            <div th:if="${success}" class="notice success" role="status" th:text="${success}">Saved successfully.</div>
+            <div th:if="${error}" class="notice error" role="alert" th:text="${error}">There was a problem.</div>
+
+            <!-- Donor: personal information pulled from the database -->
+            <section th:unless="${admin}" class="personal-information">
+                <div class="page-heading"><div><p class="eyebrow">MY PROFILE</p><h1>Donor Information</h1><p>Keep your donor information accurate and up to date.</p></div></div>
+                <article class="profile-card" th:if="${donor != null}">
+                    <div class="profile-card-header"><div class="profile-avatar"><i class="fa-solid fa-user"></i></div><div><h2 th:text="${donor.firstName + ' ' + donor.lastName}">Donor Name</h2><p>Registered LifeLink donor</p></div><span class="blood-badge" th:text="${donor.bloodType != null ? donor.bloodType : 'N/A'}">O+</span></div>
+                    <div class="profile-details">
+                        <div><span>First name</span><strong th:text="${donor.firstName}">Juan</strong></div>
+                        <div><span>Last name</span><strong th:text="${donor.lastName}">Cruz</strong></div>
+                        <div><span>Username</span><strong th:text="${donor.username}">juancruz</strong></div>
+                        <div><span>Phone number</span><strong th:text="${donor.phoneNumber != null ? donor.phoneNumber : 'Not provided'}">Not provided</strong></div>
+                        <div><span>Blood type</span><strong th:text="${donor.bloodType != null ? donor.bloodType : 'Not provided'}">O+</strong></div>
+                        <div><span>Account status</span><strong class="active-status">Active donor</strong></div>
+                    </div>
+                </article>
+                <article th:if="${donor == null}" class="profile-card empty-state"><i class="fa-solid fa-circle-exclamation"></i><h2>Profile unavailable</h2><p>We could not find your donor record. Please contact an administrator.</p></article>
+            </section>
+
+            <!-- Admin: create or edit a donor -->
+            <section th:if="${admin and formMode != null}" class="donor-form-section">
+                <div class="page-heading with-action"><div><p class="eyebrow">DONOR MANAGEMENT</p><h1 th:text="${formMode == 'edit' ? 'Edit Donor' : 'Add Donor'}">Add Donor</h1><p th:text="${formMode == 'edit' ? 'Update this donor’s stored information.' : 'Create a new donor record in LifeLink.'}">Create a new donor record.</p></div><a href="/donors" class="secondary-button"><i class="fa-solid fa-arrow-left"></i> Back to list</a></div>
+                <form class="donor-form" th:action="${formMode == 'edit' ? '/donors/' + donor.id + '/edit' : '/donors/add'}" method="post">
+                    <div class="form-grid">
+                        <label>First name<input type="text" name="firstName" th:value="${donor.firstName}" required maxlength="60" autocomplete="given-name"></label>
+                        <label>Last name<input type="text" name="lastName" th:value="${donor.lastName}" required maxlength="60" autocomplete="family-name"></label>
+                        <label>Username<input type="text" name="username" th:value="${donor.username}" required maxlength="60" autocomplete="username"></label>
+                        <label>Phone number<input type="tel" name="phoneNumber" th:value="${donor.phoneNumber}" maxlength="30" autocomplete="tel"></label>
+                        <label>Blood type<select name="bloodType" required><option value="" th:selected="${donor.bloodType == null}">Select blood type</option><option th:each="type : ${ {'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'} }" th:value="${type}" th:text="${type}" th:selected="${type == donor.bloodType}">O+</option></select></label>
+                        <label th:if="${formMode == 'add'}">Temporary password<input type="password" name="password" required minlength="6" autocomplete="new-password"><small>Give this password to the donor securely.</small></label>
+                        <div th:if="${formMode == 'edit'}" class="form-note"><i class="fa-solid fa-lock"></i><span>Password is not changed here. It remains protected during this update.</span></div>
+                    </div>
+                    <div class="form-actions"><a href="/donors" class="secondary-button">Cancel</a><button class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i><span th:text="${formMode == 'edit' ? 'Save Changes' : 'Add Donor'}">Add Donor</span></button></div>
+                </form>
+            </section>
+
+            <!-- Admin: donor list and search -->
+            <section th:if="${admin and formMode == null}" class="donor-list-section">
+                <div class="page-heading with-action"><div><p class="eyebrow">DONOR MANAGEMENT</p><h1>Donor List</h1><p>Search, review, update, or remove registered donor records.</p></div><a href="/donors/add" class="primary-button"><i class="fa-solid fa-user-plus"></i> Add Donor</a></div>
+                <article class="donor-list-card">
+                    <form class="search-form" action="/donors" method="get"><label for="donor-search">Search donors</label><div><i class="fa-solid fa-magnifying-glass"></i><input id="donor-search" name="search" th:value="${search}" placeholder="Name, username, blood type, or phone number"><button type="submit">Search</button></div></form>
+                    <p class="result-count"><span th:text="${#lists.size(donors)}">0</span> donor(s) found</p>
+                    <div class="table-wrap"><table><thead><tr><th>Donor</th><th>Username</th><th>Blood type</th><th>Phone number</th><th>Actions</th></tr></thead><tbody>
+                        <tr th:each="donor : ${donors}"><td><div class="table-person"><span th:text="${#strings.substring(donor.firstName, 0, 1) + #strings.substring(donor.lastName, 0, 1)}">JC</span><strong th:text="${donor.firstName + ' ' + donor.lastName}">Juan Cruz</strong></div></td><td th:text="${donor.username}">juancruz</td><td><span class="table-blood" th:text="${donor.bloodType != null ? donor.bloodType : 'N/A'}">O+</span></td><td th:text="${donor.phoneNumber != null ? donor.phoneNumber : 'Not provided'}">Not provided</td><td><div class="row-actions"><a th:href="@{/donors/{id}/edit(id=${donor.id})}" class="edit-action" aria-label="Edit donor"><i class="fa-solid fa-pen"></i><span>Edit</span></a><form th:action="@{/donors/{id}/delete(id=${donor.id})}" method="post" onsubmit="return confirm('Delete this donor record? This cannot be undone.');"><button class="delete-action" type="submit" aria-label="Delete donor"><i class="fa-solid fa-trash"></i><span>Delete</span></button></form></div></td></tr>
+                        <tr th:if="${#lists.isEmpty(donors)}"><td colspan="5" class="no-results"><i class="fa-solid fa-users-slash"></i><strong>No donors found</strong><span>Try a different search, or add the first donor.</span></td></tr>
+                    </tbody></table></div>
+                </article>
+            </section>
+        </main>
+    </div>
+</div>
+<script src="/js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,3146 @@
+/* =========================================================
+   COLORS
+   ========================================================= */
+
+:root {
+
+    --primary-red: #550000;
+    --dark-red: #700000;
+    --blood-red: #c91d1d;
+    --light-red: #ffe2e2;
+    --about-red: #ffbaba;
+    --footer-red: #ff969b;
+
+    --white: #ffffff;
+
+    --text-gray: #555555;
+
+}
+
+
+
+/* =========================================================
+   REGISTER PAGE
+   ========================================================= */
+
+.register-page {
+
+    min-height: calc(100vh - 100px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px 20px;
+
+}
+
+
+
+/* =========================================================
+   REGISTER CONTAINER
+   ========================================================= */
+
+.register-container {
+
+    width: 100%;
+
+    max-width: 1250px;
+
+    height: 800px;
+
+    background-color: var(--white);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 10px 30px rgba(85, 0, 0, 0.30);
+
+    display: flex;
+
+    /*
+       IMPORTANT:
+
+       LEFT  = register-content
+       RIGHT = register-right
+    */
+
+    flex-direction: row;
+
+    overflow: hidden;
+
+}
+
+
+
+/* =========================================================
+   LEFT SIDE — WELCOME VISUAL
+   ========================================================= */
+
+.register-content {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    background-color: var(--blood-red);
+
+}
+
+
+
+/* Welcome image */
+
+.register-content img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    display: block;
+
+}
+
+
+
+/* =========================================================
+   RIGHT SIDE — REGISTER FORM
+   ========================================================= */
+
+.register-right {
+
+    flex: 1;
+
+    padding: 45px 50px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+}
+
+
+
+/* =========================================================
+   REGISTER TITLE
+   ========================================================= */
+
+.register-right h1 {
+
+    font-size: 50px;
+
+    font-weight: 800;
+
+    color: var(--primary-red);
+
+    margin: 0 0 8px;
+
+    text-align: center;
+
+}
+
+
+
+.register-right > p {
+
+    font-size: 18px;
+
+    color: var(--text-gray);
+
+    margin: 0 0 28px;
+
+    text-align: center;
+
+}
+
+
+
+/* =========================================================
+   REGISTER FORM
+   ========================================================= */
+
+.register-form {
+
+    width: 100%;
+
+    max-width: 650px;
+
+}
+
+
+
+/* =========================================================
+   TWO-COLUMN ROW
+   ========================================================= */
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+}
+
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+
+    margin-bottom: 16px;
+
+}
+
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: var(--primary-red);
+
+    margin-bottom: 7px;
+
+}
+
+
+
+.form-group label span {
+
+    font-weight: 400;
+
+    color: var(--text-gray);
+
+}
+
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-group input,
+.form-group select {
+
+    width: 100%;
+
+    height: 40px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #f2caca;
+
+    border-radius: 8px;
+
+    background-color: var(--white);
+
+    font-size: 14px;
+
+    color: #333333;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+
+/* Select arrow area */
+
+.form-group select {
+
+    cursor: pointer;
+
+}
+
+
+
+/* Focus */
+
+.form-group input:focus,
+.form-group select:focus {
+
+    border-color: var(--blood-red);
+
+    box-shadow:
+        0 0 0 2px rgba(201, 29, 29, 0.08);
+
+}
+
+
+
+/* =========================================================
+   PASSWORD WRAPPER
+   ========================================================= */
+
+.password-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+}
+
+
+
+/* Password input */
+
+.password-wrapper input {
+
+    padding-right: 45px;
+
+}
+
+
+
+/* =========================================================
+   PASSWORD EYE BUTTON
+   ========================================================= */
+
+.toggle-password {
+
+    position: absolute;
+
+    right: 10px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 30px;
+
+    height: 30px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 15px;
+
+    padding: 0;
+
+}
+
+
+
+/* Remove button effects */
+
+.toggle-password:hover {
+
+    background: transparent;
+
+}
+
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.error-message {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--blood-red);
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+}
+
+
+
+/* =========================================================
+   TERMS AND CONDITIONS
+   ========================================================= */
+
+.terms-options {
+
+    width: 100%;
+
+    margin-top: 2px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+
+}
+
+
+
+/*
+   This makes it look like the
+   "Remember Me" section from Login.
+*/
+
+.terms-label {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    color: var(--text-gray);
+
+    font-weight: 400;
+
+}
+
+
+
+/* Checkbox */
+
+.terms-label input[type="checkbox"] {
+
+    width: 16px;
+
+    height: 16px;
+
+    margin: 0 3px 0 0;
+
+    cursor: pointer;
+
+}
+
+
+
+/* Terms links */
+
+.terms-link {
+
+    border: none;
+
+    background: none;
+
+    padding: 0;
+
+    margin: 0;
+
+    color: var(--blood-red);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+
+.terms-link:hover {
+
+    text-decoration: underline;
+
+}
+
+
+
+/* =========================================================
+   REGISTER BUTTON
+   ========================================================= */
+
+.register-button {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background-color: var(--blood-red);
+
+    color: var(--white);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+
+.register-button:hover {
+
+    background-color: var(--dark-red);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(201, 29, 29, 0.25);
+
+}
+
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.register-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    gap: 12px;
+
+    margin: 18px 0;
+
+}
+
+
+
+.register-divider span {
+
+    flex: 1;
+
+    height: 1px;
+
+    background-color: #dddddd;
+
+}
+
+
+
+.register-divider b {
+
+    width: 32px;
+
+    height: 32px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background-color: var(--white);
+
+    color: #777777;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+
+/* =========================================================
+   LOGIN LINK
+   ========================================================= */
+
+.register-link {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px;
+
+    border: 1px solid var(--blood-red);
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: var(--text-gray);
+
+}
+
+
+
+.register-link a {
+
+    color: var(--blood-red);
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+}
+
+
+
+.register-link a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+
+/* =========================================================
+   TERMS MODAL
+   ========================================================= */
+
+.terms-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.45);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 9999;
+
+}
+
+
+
+.terms-modal.active {
+
+    display: flex;
+
+}
+
+
+
+.terms-modal-content {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background-color: var(--white);
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+
+}
+
+
+
+.terms-modal-content h2 {
+
+    color: var(--primary-red);
+
+    margin-top: 0;
+
+}
+
+
+
+.terms-modal-content p {
+
+    color: var(--text-gray);
+
+    line-height: 1.6;
+
+}
+
+
+
+.terms-modal-close {
+
+    float: right;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+}
+
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .register-container {
+
+        height: auto;
+
+        flex-direction: column;
+
+    }
+
+
+    .register-content {
+
+        min-height: 350px;
+
+    }
+
+
+    .register-right {
+
+        padding: 40px 30px;
+
+    }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+    .form-row {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
+    }
+
+
+    .register-right h1 {
+
+        font-size: 40px;
+
+    }
+
+
+    .register-content {
+
+        min-height: 280px;
+
+    }
+
+}
+
+/* =========================================================
+   REGISTER - DARK MODE
+   ========================================================= */
+
+body.dark-mode .register-container {
+    background-color: var(--dark-card);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================================================
+   REGISTER RIGHT SIDE
+   ========================================================= */
+
+body.dark-mode .register-right {
+    background-color: var(--dark-card);
+}
+
+
+/* =========================================================
+   REGISTER TITLE
+   ========================================================= */
+
+body.dark-mode .register-right h1 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .register-right > p {
+    color: var(--dark-muted);
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+body.dark-mode .form-group label {
+    color: var(--dark-text);
+}
+
+body.dark-mode .form-group label span {
+    color: var(--dark-muted);
+}
+
+
+/* =========================================================
+   INPUTS + SELECT
+   ========================================================= */
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select {
+    background-color: #3a3a3a;
+
+    border-color: #555555;
+
+    color: var(--dark-text);
+}
+
+
+/* Placeholder */
+
+body.dark-mode .form-group input::placeholder {
+    color: #aaaaaa;
+}
+
+
+/* Select options */
+
+body.dark-mode .form-group select option {
+    background-color: #3a3a3a;
+
+    color: var(--dark-text);
+}
+
+
+/* Input focus */
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus {
+    border-color: var(--blood-red);
+
+    box-shadow:
+        0 0 0 2px rgba(201, 29, 29, 0.20);
+}
+
+
+/* =========================================================
+   TERMS
+   ========================================================= */
+
+body.dark-mode .terms-label {
+    color: var(--dark-muted);
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+body.dark-mode .register-divider span {
+    background-color: #555555;
+}
+
+body.dark-mode .register-divider b {
+    background-color: var(--dark-card);
+
+    border-color: #555555;
+
+    color: var(--dark-muted);
+}
+
+
+/* =========================================================
+   LOGIN LINK
+   ========================================================= */
+
+body.dark-mode .register-link {
+    color: var(--dark-muted);
+
+    border-color: var(--blood-red);
+
+    background-color: #333333;
+}
+
+body.dark-mode .register-link a {
+    color: #ff4a4a;
+}
+
+
+/* =========================================================
+   TERMS MODAL
+   ========================================================= */
+
+body.dark-mode .terms-modal-content {
+    background-color: var(--dark-card);
+}
+
+body.dark-mode .terms-modal-content h2 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .terms-modal-content p {
+    color: var(--dark-muted);
+}
+
+body.dark-mode .terms-modal-close {
+    color: var(--dark-text);
+}
+
+
+/* =========================================================
+   PASSWORD EYE
+   ========================================================= */
+
+body.dark-mode .toggle-password {
+    color: var(--dark-text);
+}
+
+/* =========================================================
+   REGISTER - DARK MODE
+   ========================================================= */
+
+body.dark-mode .register-page {
+    background-color: transparent;
+}
+
+
+/* REGISTER CONTAINER */
+
+body.dark-mode .register-container {
+    background-color: var(--dark-card);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+
+/* RIGHT SIDE */
+
+body.dark-mode .register-right {
+    background-color: var(--dark-card);
+}
+
+
+/* TITLE */
+
+body.dark-mode .register-right h1 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .register-right > p {
+    color: var(--dark-muted);
+}
+
+
+/* LABELS */
+
+body.dark-mode .form-group label {
+    color: var(--dark-text);
+}
+
+body.dark-mode .form-group label span {
+    color: var(--dark-muted);
+}
+
+
+/* INPUTS */
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select {
+    background-color: #3a3a3a;
+
+    border-color: #555555;
+
+    color: var(--dark-text);
+}
+
+
+/* PLACEHOLDER */
+
+body.dark-mode .form-group input::placeholder {
+    color: #aaaaaa;
+}
+
+
+/* SELECT OPTIONS */
+
+body.dark-mode .form-group select option {
+    background-color: #3a3a3a;
+
+    color: var(--dark-text);
+}
+
+
+/* FOCUS */
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus {
+    border-color: var(--blood-red);
+
+    box-shadow:
+        0 0 0 2px rgba(201, 29, 29, 0.20);
+}
+
+
+/* TERMS */
+
+body.dark-mode .terms-label {
+    color: var(--dark-muted);
+}
+
+
+/* DIVIDER */
+
+body.dark-mode .register-divider span {
+    background-color: #555555;
+}
+
+body.dark-mode .register-divider b {
+    background-color: var(--dark-card);
+
+    border-color: #555555;
+
+    color: var(--dark-muted);
+}
+
+
+/* LOGIN LINK */
+
+body.dark-mode .register-link {
+    background-color: #333333;
+
+    border-color: var(--blood-red);
+
+    color: var(--dark-muted);
+}
+
+body.dark-mode .register-link a {
+    color: #ff4a4a;
+}
+
+
+/* PASSWORD EYE */
+
+body.dark-mode .toggle-password {
+    color: var(--dark-text);
+}
+
+
+/* TERMS MODAL */
+
+body.dark-mode .terms-modal-content {
+    background-color: var(--dark-card);
+}
+
+body.dark-mode .terms-modal-content h2 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .terms-modal-content p {
+    color: var(--dark-muted);
+}
+
+body.dark-mode .terms-modal-close {
+    color: var(--dark-text);
+}
+
+/* =========================================================
+   TERMS MODAL HEADINGS + LIST
+   ========================================================= */
+
+.terms-modal-content h3 {
+    color: var(--primary-red);
+    margin-top: 22px;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.terms-modal-content ul {
+    color: var(--text-gray);
+    line-height: 1.7;
+    padding-left: 25px;
+}
+
+.terms-modal-content li {
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   DARK MODE MODAL HEADINGS + LIST
+   ========================================================= */
+
+body.dark-mode .terms-modal-content h3 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .terms-modal-content ul {
+    color: var(--dark-muted);
+}
+
+/* =====================================================
+   ADMIN REGISTRATION CODE
+   ===================================================== */
+
+.optional {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-left: 4px;
+}
+
+.admin-code-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+/* =========================================================
+   ADMIN REGISTRATION CONFIRMATION
+   ========================================================= */
+
+.admin-confirm-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(5px);
+}
+
+
+/* =========================================================
+   MODAL CONTENT
+   ========================================================= */
+
+.admin-confirm-content {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 480px;
+
+    padding: 40px;
+
+    border-radius: 25px;
+
+    background: var(--white);
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.admin-confirm-close {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 20px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    color: var(--text-gray);
+
+    line-height: 1;
+}
+
+
+.admin-confirm-close:hover {
+
+    color: var(--primary-red);
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.admin-confirm-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--light-red);
+
+    color: var(--primary-red);
+
+    font-size: 30px;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.admin-confirm-content h2 {
+
+    margin: 0 0 15px;
+
+    color: var(--primary-red);
+
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+.admin-confirm-content p {
+
+    margin: 5px 0;
+
+    color: var(--text-gray);
+
+    line-height: 1.5;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.admin-confirm-form {
+
+    margin-top: 25px;
+
+    text-align: left;
+}
+
+
+.admin-confirm-form label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+
+    color: var(--primary-red);
+}
+
+
+.admin-confirm-form input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+
+.admin-confirm-form input:focus {
+
+    border-color: var(--blood-red);
+
+    box-shadow: 0 0 0 3px rgba(201, 29, 29, 0.1);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.admin-confirm-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.admin-confirm-button,
+.admin-cancel-button {
+
+    flex: 1;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+
+.admin-confirm-button {
+
+    border: none;
+
+    background: var(--primary-red);
+
+    color: var(--white);
+}
+
+
+.admin-confirm-button:hover {
+
+    background: var(--dark-red);
+
+    transform: translateY(-1px);
+}
+
+
+.admin-cancel-button {
+
+    border: 1px solid #ccc;
+
+    background: transparent;
+
+    color: var(--text-gray);
+}
+
+
+.admin-cancel-button:hover {
+
+    background: #f5f5f5;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.admin-confirm-form .error-message {
+
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--blood-red);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark-mode .admin-confirm-content {
+
+    background: #1e1e1e;
+
+    color: #fff;
+}
+
+
+body.dark-mode .admin-confirm-content p {
+
+    color: #ccc;
+}
+
+
+body.dark-mode .admin-confirm-form input {
+
+    background: #2a2a2a;
+
+    color: #fff;
+
+    border-color: #444;
+}
+
+
+body.dark-mode .admin-cancel-button {
+
+    color: #ddd;
+
+    border-color: #555;
+}
+
+
+body.dark-mode .admin-cancel-button:hover {
+
+    background: #333;
+}
+
+/* =========================================================
+   ADMIN REGISTRATION CONFIRMATION MODAL
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   MODAL BACKGROUND
+   --------------------------------------------------------- */
+
+.admin-confirmation-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(40, 0, 0, 0.58);
+
+    backdrop-filter: blur(4px);
+
+    -webkit-backdrop-filter: blur(4px);
+
+    z-index: 99999;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+
+}
+
+
+/* ---------------------------------------------------------
+   ACTIVE MODAL
+   --------------------------------------------------------- */
+
+.admin-confirmation-modal.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+/* ---------------------------------------------------------
+   MODAL BOX
+   --------------------------------------------------------- */
+
+.admin-confirmation-box {
+
+    position: relative;
+
+    width: min(560px, 100%);
+
+    background: #ffffff;
+
+    border-radius: 28px;
+
+    padding: 42px 48px 38px;
+
+    box-shadow:
+        0 25px 70px rgba(60, 0, 0, 0.30),
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    transform: translateY(15px) scale(0.97);
+
+    transition:
+        transform 0.25s ease;
+
+    text-align: center;
+
+}
+
+
+.admin-confirmation-modal.active
+.admin-confirmation-box {
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+/* ---------------------------------------------------------
+   CLOSE BUTTON
+   --------------------------------------------------------- */
+
+.admin-modal-close {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 22px;
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #555555;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+.admin-modal-close:hover {
+
+    background: #ffe7e7;
+
+    color: #700000;
+
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN ICON
+   --------------------------------------------------------- */
+
+.admin-modal-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+}
+
+
+.admin-shield {
+
+    position: relative;
+
+    width: 92px;
+
+    height: 92px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffe3e3;
+
+    color: #700000;
+
+}
+
+
+.admin-shield::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 48px;
+
+    height: 56px;
+
+    border: 4px solid #700000;
+
+    border-radius: 45% 45% 50% 50%;
+
+    clip-path: polygon(
+        50% 0%,
+        92% 20%,
+        88% 70%,
+        50% 100%,
+        12% 70%,
+        8% 20%
+    );
+
+}
+
+
+.admin-shield span {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 25px;
+
+    margin-top: -2px;
+
+}
+
+
+.admin-shield small {
+
+    position: absolute;
+
+    right: 10px;
+
+    bottom: 9px;
+
+    width: 29px;
+
+    height: 29px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    font-size: 14px;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* ---------------------------------------------------------
+   TITLE
+   --------------------------------------------------------- */
+
+.admin-confirmation-box h2 {
+
+    margin: 0;
+
+    color: #700000;
+
+    font-size: 31px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+
+}
+
+
+/* ---------------------------------------------------------
+   DECORATIVE DIVIDER
+   --------------------------------------------------------- */
+
+.admin-modal-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 17px 0 22px;
+
+}
+
+
+.admin-modal-divider span {
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #ead0d0;
+
+}
+
+
+.admin-modal-divider b {
+
+    color: #ff969b;
+
+    font-size: 15px;
+
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+   --------------------------------------------------------- */
+
+.admin-modal-description {
+
+    margin: 0 auto 13px;
+
+    max-width: 470px;
+
+    color: #333333;
+
+    font-size: 16px;
+
+    line-height: 1.65;
+
+}
+
+
+/* ---------------------------------------------------------
+   INSTRUCTION
+   --------------------------------------------------------- */
+
+.admin-modal-instruction {
+
+    margin: 0 auto 24px;
+
+    max-width: 470px;
+
+    color: #555555;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ---------------------------------------------------------
+   CODE GROUP
+   --------------------------------------------------------- */
+
+.admin-code-group {
+
+    text-align: left;
+
+    margin-bottom: 20px;
+
+}
+
+
+.admin-code-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #700000;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+/* ---------------------------------------------------------
+   CODE INPUT WRAPPER
+   --------------------------------------------------------- */
+
+.admin-code-wrapper {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    height: 56px;
+
+    border: 1.5px solid #b87979;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.admin-code-wrapper:focus-within {
+
+    border-color: #700000;
+
+    box-shadow:
+        0 0 0 3px rgba(112, 0, 0, 0.10);
+
+}
+
+
+/* ---------------------------------------------------------
+   LOCK ICON
+   --------------------------------------------------------- */
+
+.admin-lock {
+
+    width: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+
+    opacity: 0.7;
+
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN INPUT
+   --------------------------------------------------------- */
+
+.admin-code-wrapper input {
+
+    flex: 1;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #333333;
+
+    font-size: 16px;
+
+    padding: 0 8px;
+
+}
+
+
+.admin-code-wrapper input::placeholder {
+
+    color: #999999;
+
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN CODE TOGGLE
+   --------------------------------------------------------- */
+
+.admin-code-toggle {
+
+    width: 48px;
+
+    height: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #777777;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+}
+
+
+.admin-code-toggle:hover {
+
+    color: #700000;
+
+}
+
+
+/* ---------------------------------------------------------
+   ERROR MESSAGE
+   --------------------------------------------------------- */
+
+.admin-confirmation-error {
+
+    display: block;
+
+    min-height: 20px;
+
+    margin-top: 7px;
+
+    color: #c91d1d;
+
+    font-size: 13px;
+
+}
+
+
+/* ---------------------------------------------------------
+   INFORMATION BOX
+   --------------------------------------------------------- */
+
+.admin-info-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 15px 17px;
+
+    margin-bottom: 25px;
+
+    border-radius: 12px;
+
+    background: #fff0f0;
+
+    text-align: left;
+
+}
+
+
+.admin-info-icon {
+
+    flex-shrink: 0;
+
+    width: 27px;
+
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #c91d1d;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+.admin-info-box p {
+
+    margin: 0;
+
+    color: #4f3333;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+.admin-modal-buttons {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+}
+
+
+/* ---------------------------------------------------------
+   CANCEL
+   --------------------------------------------------------- */
+
+.admin-cancel-button {
+
+    height: 53px;
+
+    border: 1.5px solid #b8b8b8;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #555555;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.admin-cancel-button:hover {
+
+    background: #f6f6f6;
+
+    border-color: #888888;
+
+}
+
+
+/* ---------------------------------------------------------
+   CONFIRM
+   --------------------------------------------------------- */
+
+.admin-confirm-button {
+
+    height: 53px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #c91d1d;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.admin-confirm-button:hover {
+
+    background: #a91414;
+
+    box-shadow:
+        0 6px 16px rgba(201, 29, 29, 0.22);
+
+}
+
+
+.admin-confirm-button:active {
+
+    transform: scale(0.98);
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .admin-confirmation-box {
+
+        padding: 35px 25px 28px;
+
+        border-radius: 22px;
+
+    }
+
+
+    .admin-confirmation-box h2 {
+
+        font-size: 26px;
+
+    }
+
+
+    .admin-modal-description,
+    .admin-modal-instruction {
+
+        font-size: 14px;
+
+    }
+
+
+    .admin-modal-buttons {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .admin-cancel-button,
+    .admin-confirm-button {
+
+        width: 100%;
+
+    }
+
+}
+
+/* =====================================================
+   ADMIN REGISTRATION CONFIRMATION MODAL
+   ===================================================== */
+
+.admin-confirmation-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(4px);
+
+    z-index: 9999;
+
+}
+
+
+.admin-confirmation-modal.active {
+
+    display: flex;
+
+}
+
+
+.admin-confirmation-box {
+
+    width: 100%;
+
+    max-width: 440px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+
+    animation:
+        adminModalAppear
+        0.2s ease-out;
+
+}
+
+
+@keyframes adminModalAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(0.98);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.admin-confirmation-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 24px 28px;
+
+    border-bottom:
+        1px solid #e8e8e8;
+
+}
+
+
+.admin-confirmation-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    background: #f1f5f9;
+
+    border-radius: 14px;
+
+}
+
+
+.admin-confirmation-header h2 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+
+.admin-confirmation-header p {
+
+    margin: 4px 0 0;
+
+    font-size: 13px;
+
+    color: #6b7280;
+
+}
+
+
+
+/* =====================================================
+   BODY
+   ===================================================== */
+
+.admin-confirmation-body {
+
+    padding: 25px 28px;
+
+}
+
+
+.admin-confirmation-body p {
+
+    margin-top: 0;
+
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #4b5563;
+
+}
+
+
+.admin-code-group {
+
+    margin-top: 22px;
+
+}
+
+
+.admin-code-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+
+.admin-code-wrapper {
+
+    position: relative;
+
+}
+
+
+.admin-code-wrapper input {
+
+    width: 100%;
+
+    padding:
+        13px 48px 13px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+
+}
+
+
+.admin-code-wrapper input:focus {
+
+    border-color: #9ca3af;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(156, 163, 175, 0.18);
+
+}
+
+
+.toggle-admin-code {
+
+    position: absolute;
+
+    top: 50%;
+
+    right: 12px;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+}
+
+
+.admin-code-error {
+
+    display: block;
+
+    min-height: 18px;
+
+    margin-top: 7px;
+
+    font-size: 12px;
+
+    color: #dc2626;
+
+}
+
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.admin-confirmation-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 18px 28px;
+
+    background: #f9fafb;
+
+    border-top:
+        1px solid #e8e8e8;
+
+}
+
+
+.admin-confirmation-actions button {
+
+    padding:
+        11px 20px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+}
+
+
+.admin-cancel-button {
+
+    color: #4b5563;
+
+    background: #ffffff;
+
+    border:
+        1px solid #d1d5db;
+
+}
+
+
+.admin-cancel-button:hover {
+
+    background: #f3f4f6;
+
+}
+
+
+.admin-confirm-button {
+
+    color: #ffffff;
+
+    background: #374151;
+
+    border:
+        1px solid #374151;
+
+}
+
+
+.admin-confirm-button:hover {
+
+    background: #1f2937;
+
+}
+
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 480px) {
+
+    .admin-confirmation-header,
+    .admin-confirmation-body,
+    .admin-confirmation-actions {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+    }
+
+
+    .admin-confirmation-actions {
+
+        justify-content: stretch;
+
+    }
+
+
+    .admin-confirmation-actions button {
+
+        flex: 1;
+
+    }
+
+}
+
+/* =========================================================
+   REGISTRATION SUCCESS MODAL
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   MODAL BACKGROUND
+   --------------------------------------------------------- */
+
+.registration-success-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(4px);
+
+    -webkit-backdrop-filter: blur(4px);
+
+    z-index: 10000;
+
+}
+
+
+.registration-success-modal.active {
+
+    display: flex;
+
+}
+
+
+/* ---------------------------------------------------------
+   SUCCESS BOX
+   --------------------------------------------------------- */
+
+.registration-success-box {
+
+    width: 100%;
+
+    max-width: 440px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+
+    animation:
+        registrationSuccessAppear
+        0.2s ease-out;
+
+}
+
+
+@keyframes registrationSuccessAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(0.98);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+   --------------------------------------------------------- */
+
+.registration-success-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 24px 28px;
+
+    border-bottom:
+        1px solid #e8e8e8;
+
+}
+
+
+.registration-success-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+
+    background: #eaf7ee;
+
+    border-radius: 14px;
+
+}
+
+
+.registration-success-header h2 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+
+.registration-success-header p {
+
+    margin: 4px 0 0;
+
+    font-size: 13px;
+
+    color: #6b7280;
+
+}
+
+
+/* ---------------------------------------------------------
+   BODY
+   --------------------------------------------------------- */
+
+.registration-success-body {
+
+    padding: 25px 28px;
+
+}
+
+
+.registration-success-body p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #4b5563;
+
+}
+
+
+/* ---------------------------------------------------------
+   ACTIONS
+   --------------------------------------------------------- */
+
+.registration-success-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    padding: 18px 28px;
+
+    background: #f9fafb;
+
+    border-top:
+        1px solid #e8e8e8;
+
+}
+
+
+/* ---------------------------------------------------------
+   GO TO LOGIN BUTTON
+   --------------------------------------------------------- */
+
+.go-to-login-button {
+
+    padding:
+        11px 20px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+    color: #ffffff;
+
+    background: var(--blood-red);
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+
+}
+
+
+.go-to-login-button:hover {
+
+    background: var(--dark-red);
+
+}
+
+
+.go-to-login-button:active {
+
+    transform: scale(0.98);
+
+}
+
+
+/* ---------------------------------------------------------
+   DARK MODE
+   --------------------------------------------------------- */
+
+body.dark-mode .registration-success-box {
+
+    background: var(--dark-card);
+
+}
+
+
+body.dark-mode .registration-success-header {
+
+    border-bottom-color: #444444;
+
+}
+
+
+body.dark-mode .registration-success-header h2 {
+
+    color: var(--dark-text);
+
+}
+
+
+body.dark-mode .registration-success-header p {
+
+    color: var(--dark-muted);
+
+}
+
+
+body.dark-mode .registration-success-body p {
+
+    color: var(--dark-muted);
+
+}
+
+
+body.dark-mode .registration-success-actions {
+
+    background: #252525;
+
+    border-top-color: #444444;
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .registration-success-header,
+    .registration-success-body,
+    .registration-success-actions {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+    }
+
+
+    .registration-success-actions {
+
+        justify-content: stretch;
+
+    }
+
+
+    .go-to-login-button {
+
+        width: 100%;
+
+    }
+
+}
+
+/* =====================================================
+   REGISTRATION SUCCESS MODAL
+   ===================================================== */
+
+.registration-success-modal {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 9999;
+
+}
+
+
+.registration-success-modal.active {
+
+    display: flex;
+
+}
+
+
+.registration-success-box {
+
+    width: 460px;
+
+    max-width: 90%;
+
+    padding: 45px 40px;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+.registration-success-icon {
+
+    width: 75px;
+
+    height: 75px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dff5e5;
+
+    color: #28a745;
+
+    font-size: 42px;
+
+    font-weight: bold;
+
+}
+
+
+.registration-success-box h2 {
+
+    margin-bottom: 15px;
+
+    font-size: 28px;
+
+}
+
+
+.registration-success-box p {
+
+    margin: 8px 0;
+
+    line-height: 1.6;
+
+}
+
+
+.go-to-login-button {
+
+    width: 100%;
+
+    margin-top: 28px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    background: #c62828;
+
+    color: white;
+
+}
+
+
+.go-to-login-button:hover {
+
+    transform: translateY(-2px);
+
+    opacity: 0.9;
+
+}
+
+/* =====================================================
+   REGISTRATION SUCCESS MODAL
+   ===================================================== */
+
+.registration-success-modal {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 9999;
+
+}
+
+
+.registration-success-modal.active {
+
+    display: flex;
+
+}
+
+
+.registration-success-box {
+
+    width: 420px;
+
+    max-width: 90%;
+
+    padding: 45px 40px;
+
+    border-radius: 20px;
+
+    background: white;
+
+    text-align: center;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+}
+
+
+.registration-success-icon {
+
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    font-size: 42px;
+
+    font-weight: bold;
+
+    background: #dff5e5;
+
+    color: #28a745;
+
+}
+
+
+.registration-success-box h2 {
+
+    margin-bottom: 15px;
+
+}
+
+
+.registration-success-box p {
+
+    margin-bottom: 10px;
+
+}
+
+
+.go-to-login-button {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    font-size: 15px;
+
+}

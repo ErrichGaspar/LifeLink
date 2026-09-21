@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink | Donor Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body class="dashboard-page dashboard-home">
+
+<div class="background-image">
+    <img src="/images/bg.png" alt="LifeLink Background">
+</div>
+
+<div class="site-wrapper">
+
+    <div class="app-shell">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="donor-profile" id="profile" th:unless="${admin}">
+                <div class="big-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-copy">
+                    <h3 th:text="${firstName != null ? firstName : 'Donor'}">Donor</h3>
+                    <p>Welcome back!</p>
+                </div>
+            </div>
+
+            <div class="admin-title" th:if="${admin}">ADMIN DASHBOARD</div>
+
+            <nav class="menu">
+                <a href="/dashboard" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    <span th:text="${admin} ? 'Admin Dashboard' : 'Dashboard'">Dashboard</span>
+                </a>
+
+                <a href="/donors">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                    <span>Donor Information</span>
+                </a>
+
+                <a href="/assessment">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <span th:text="${admin} ? 'Donor Eligibility / Status' : 'Eligibility / Status'">Eligibility / Status</span>
+                </a>
+
+                <a href="/donation">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Schedule Donation</span>
+                </a>
+
+                <a href="/reports">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Donation History</span>
+                </a>
+
+                <a href="#appointment">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span>Upcoming Appointment</span>
+                </a>
+
+                <a href="#requests">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span>Blood Requests</span>
+                </a>
+
+                <a href="#profile">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-tools">
+                <span>Dark mode</span>
+                <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+                    <span></span>
+                </button>
+            </div>
+
+            <a href="/logout" class="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span th:text="${admin} ? 'LOG OUT' : 'Logout'">Logout</span>
+            </a>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+
+            <!-- =========================================================
+                 DONOR DASHBOARD
+            ========================================================== -->
+            <div th:unless="${admin}" class="donor-dashboard">
+
+                <!-- WELCOME -->
+                <section class="welcome-card">
+                    <div class="welcome-left">
+                        <div class="welcome-icon">
+                            <img src="/images/dashboard-transparent.png" alt="Blood donation illustration">
+                        </div>
+
+                        <div class="welcome-copy">
+                            <h1>
+                                Welcome,
+                                <span th:text="${firstName != null ? firstName : 'Donor'}">Donor</span>!
+                                <span class="wave">👋</span>
+                            </h1>
+                            <p>Thank you for being a hero.</p>
+                            <strong>Every drop counts.</strong>
+                        </div>
+                    </div>
+
+                    <div class="welcome-heart" aria-hidden="true">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                </section>
+
+                <!-- BIG STAT CARDS -->
+                <section class="stat-grid donor-stats">
+
+                    <article class="stat-card">
+                        <span class="icon-circle">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <div class="stat-copy">
+                            <p>Donation Eligibility</p>
+                            <h2 class="green" th:text="${assessment != null ? assessment.eligibilityStatus : 'In Process'}">Eligible</h2>
+                            <small th:text="${assessment != null ? 'Readiness score: ' + assessment.readinessScore + '/100' : 'Complete your health assessment.'}">You are eligible to donate.</small>
+                            <a href="/assessment">View Details <span>→</span></a>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="icon-circle">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </span>
+                        <div class="stat-copy">
+                            <p>Upcoming Appointment</p>
+
+                            <div th:if="${upcomingAppointment != null}">
+                                <h2 class="appointment-date-short"
+                                    th:text="${#temporals.format(upcomingAppointment.appointmentDate, 'MMM dd, yyyy')}">
+                                    May 28, 2025
+                                </h2>
+                                <small>
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span th:text="${#temporals.format(upcomingAppointment.appointmentTime, 'hh:mm a')}">10:30 AM</span>
+                                </small>
+                            </div>
+
+                            <div th:if="${upcomingAppointment == null}">
+                                <h2>No Appointment</h2>
+                                <small>No upcoming appointment scheduled.</small>
+                            </div>
+
+                            <a href="#appointment">View Appointment <span>→</span></a>
+                        </div>
+                    </article>
+
+                    <article class="stat-card compact">
+                        <span class="icon-circle">
+                            <i class="fa-solid fa-droplet"></i>
+                        </span>
+                        <div class="stat-copy">
+                            <p>Blood Type</p>
+                            <h2 th:text="${bloodType != null ? bloodType : 'N/A'}">O+</h2>
+                            <small>Blood Donor</small>
+                        </div>
+                    </article>
+
+                    <article class="stat-card compact">
+                        <span class="icon-circle">
+                            <i class="fa-solid fa-heart"></i>
+                        </span>
+                        <div class="stat-copy">
+                            <p>Total Donations</p>
+                            <h2 th:text="${totalDonations}">0</h2>
+                            <small>Thank you!</small>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- MIDDLE PANELS -->
+                <section class="three-grid">
+
+                    <!-- QUICK ACTIONS -->
+                    <article class="panel quick">
+                        <div class="panel-head">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="line"></div>
+
+                        <a href="/donation" class="quick-action">
+                            <span><i class="fa-regular fa-calendar-plus"></i>Schedule a Donation</span>
+                            <b>›</b>
+                        </a>
+
+                        <a href="#requests" class="quick-action">
+                            <span><i class="fa-solid fa-droplet"></i>View Blood Requests</span>
+                            <b>›</b>
+                        </a>
+
+                        <a href="/reports" class="quick-action">
+                            <span><i class="fa-solid fa-file-lines"></i>View Donation History</span>
+                            <b>›</b>
+                        </a>
+                    </article>
+
+                    <!-- APPOINTMENT -->
+                    <article class="panel appointment" id="appointment">
+                        <div class="panel-head">
+                            <h3>Upcoming Appointment</h3>
+                            <a href="#appointment">View All</a>
+                        </div>
+                        <div class="line"></div>
+
+                        <div th:if="${upcomingAppointment != null}" class="appointment-content">
+                            <div class="appointment-box">
+                                <div class="date-box">
+                                    <span th:text="${#temporals.format(upcomingAppointment.appointmentDate, 'MMM')}">MAY</span>
+                                    <strong th:text="${#temporals.format(upcomingAppointment.appointmentDate, 'dd')}">28</strong>
+                                </div>
+
+                                <div class="appointment-info">
+                                    <h4 th:text="${#temporals.format(upcomingAppointment.appointmentDate, 'MMMM dd, yyyy')}">
+                                        May 28, 2025
+                                    </h4>
+                                    <p>
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span th:text="${#temporals.format(upcomingAppointment.appointmentTime, 'hh:mm a')}">10:30 AM</span>
+                                    </p>
+                                    <p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span th:text="${upcomingAppointment.location != null ? upcomingAppointment.location : 'LifeLink Donation Center'}">
+                                            LifeLink Donation Center
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <a href="/donation" class="danger-button">Reschedule / Cancel</a>
+                        </div>
+
+                        <div th:if="${upcomingAppointment == null}" class="no-appointment">
+                            <i class="fa-regular fa-calendar-xmark"></i>
+                            <h4>No Upcoming Appointment</h4>
+                            <p>You currently have no scheduled donation.</p>
+                            <a href="/donation" class="danger-button">Schedule Donation</a>
+                        </div>
+                    </article>
+
+                    <!-- HISTORY -->
+                    <article class="panel history">
+                        <div class="panel-head">
+                            <h3>Donation History</h3>
+                            <a href="/reports">View All</a>
+                        </div>
+                        <div class="line"></div>
+
+                        <div class="history-row" th:each="donation : ${donationHistory}">
+                            <i class="fa-solid fa-droplet"></i>
+                            <span th:text="${donation.donationDate}">Mar 15, 2025</span>
+                            <span th:text="${donation.bloodType}">O+</span>
+                            <b th:text="${donation.status}">Completed</b>
+                        </div>
+
+                        <a class="bottom-link" href="/reports">View All History →</a>
+                    </article>
+                </section>
+
+                <!-- BLOOD REQUESTS -->
+                <article class="panel request-panel" id="requests">
+                    <div class="panel-head">
+                        <h3>Blood Requests</h3>
+                        <a href="#requests">View All</a>
+                    </div>
+                    <div class="line"></div>
+
+                    <div class="request-row">
+                        <span class="request-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </span>
+
+                        <div class="request-patient">
+                            <small>Patient</small>
+                            <strong>Juan Cruz</strong>
+                            <span>
+                                <b>O+</b>
+                                <em>|</em>
+                                <b>2 Units</b>
+                            </span>
+                        </div>
+
+                        <div class="request-detail">
+                            <small>Hospital</small>
+                            <strong>General Hospital</strong>
+                        </div>
+
+                        <div class="request-detail priority">
+                            <small>Priority</small>
+                            <span>Urgent</span>
+                        </div>
+
+                        <div class="request-detail status">
+                            <small>Status</small>
+                            <span>Pending</span>
+                        </div>
+
+                        <button type="button" class="request-button">View Details</button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- =========================================================
+                 ADMIN DASHBOARD - KEPT FUNCTIONAL
+            ========================================================== -->
+            <div th:if="${admin}" class="admin-dashboard">
+                <section class="admin-welcome">
+                    <h1>LIFELINK ADMIN DASHBOARD</h1>
+                    <h3>Welcome, <span th:text="${firstName}">Admin</span>! 👋</h3>
+                    <p>Here's what's happening with LifeLink today.</p>
+                </section>
+
+                <section class="stat-grid admin-stats">
+                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-users"></i></span><div class="stat-copy"><p>Total Donors</p><h2 th:text="${totalDonors}">0</h2><small>Registered donors</small></div></article>
+                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-droplet"></i></span><div class="stat-copy"><p>Total Donations</p><h2 th:text="${totalCompletedDonations}">0</h2><small>Completed donations</small></div></article>
+                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-calendar-days"></i></span><div class="stat-copy"><p>Appointments</p><h2 th:text="${upcomingAppointments}">0</h2><small>Upcoming appointments</small></div></article>
+                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-heart-pulse"></i></span><div class="stat-copy"><p>Blood Requests</p><h2 th:text="${activeRequests}">0</h2><small>Active requests</small></div></article>
+                </section>
+
+                <section class="admin-grid">
+                    <article class="panel inventory">
+                        <h3><i class="fa-solid fa-droplet"></i> Blood Inventory</h3>
+                        <div class="line"></div>
+                        <div class="inventory-list">
+                            <div><span>A+</span><em style="--w:75%"></em><b>75%</b></div>
+                            <div><span>A-</span><em style="--w:45%"></em><b>45%</b></div>
+                            <div><span>B+</span><em style="--w:62%"></em><b>62%</b></div>
+                            <div><span>B-</span><em style="--w:35%"></em><b>35%</b></div>
+                            <div><span>AB+</span><em style="--w:50%"></em><b>50%</b></div>
+                            <div><span>AB-</span><em style="--w:25%"></em><b>25%</b></div>
+                            <div><span>O+</span><em style="--w:88%"></em><b>88%</b></div>
+                            <div><span>O-</span><em style="--w:40%"></em><b>40%</b></div>
+                        </div>
+                    </article>
+
+                    <article class="panel recent">
+                        <div class="panel-head"><h3>Recent Blood Requests</h3><a href="#">View All</a></div>
+                        <div class="line"></div>
+                        <div class="admin-table-row heading"><span>Patient</span><span>Type</span><span>Units</span><span>Priority</span><span>Status</span></div>
+                        <div class="admin-table-row"><span>Juan Cruz</span><strong>O+</strong><span>2</span><b class="urgent">Urgent</b><em class="pending">Pending</em></div>
+                        <div class="admin-table-row"><span>Maria Santos</span><strong>A+</strong><span>1</span><b class="normal">Normal</b><em class="approved">Approved</em></div>
+                    </article>
+                </section>
+
+                <section class="admin-grid bottom">
+                    <article class="panel upcoming">
+                        <div class="panel-head"><h3><i class="fa-regular fa-calendar-days"></i> Upcoming Appointments</h3></div>
+                        <div class="line"></div>
+                        <div><i class="fa-solid fa-user"></i><span><b>Juan Cruz</b></span><b>9:00 AM</b></div>
+                        <div><i class="fa-solid fa-user"></i><span><b>Maria Santos</b></span><b>10:30 AM</b></div>
+                        <div><i class="fa-solid fa-user"></i><span><b>Pedro Reyes</b></span><b>1:00 PM</b></div>
+                    </article>
+
+                    <article class="panel chart">
+                        <h3><i class="fa-solid fa-chart-column"></i> Donations</h3>
+                        <p class="chart-label">This Month</p>
+                        <div class="bars" aria-label="Monthly donation chart">
+                            <i style="--h: 58%"></i><i style="--h: 75%"></i><i style="--h: 44%"></i><i style="--h: 85%"></i><i style="--h: 64%"></i><i style="--h: 76%"></i><i style="--h: 52%"></i>
+                        </div>
+                        <p>Donation Chart</p>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+</html>
