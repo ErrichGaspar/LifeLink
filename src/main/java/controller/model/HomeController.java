@@ -46,6 +46,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/learn-more")
+    public String learnMore() {
+        return "learn-more";
+    }
+
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
 

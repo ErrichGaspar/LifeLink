@@ -124,15 +124,6 @@
                                     placeholder="Enter your password"
                                 >
 
-                                <button
-                                    type="button"
-                                    id="toggle-password"
-                                    class="toggle-password"
-                                    aria-label="Show password"
-                                >
-                                    👁
-
-                                </button>
                             
                             </div>
 
@@ -141,9 +132,16 @@
                         </div>
 
 
-                        <!-- REMEMBER ME + FORGOT PASSWORD -->
+                        <p th:if="${error}" class="server-error" th:text="${error}">Invalid username or password.</p>
+
+                        <!-- PASSWORD VISIBILITY + REMEMBER ME -->
 
                         <div class="login-options">
+
+                            <label>
+                                <input type="checkbox" id="view-password">
+                                View password
+                            </label>
 
                             <label>
                                 <input
@@ -152,10 +150,6 @@
                                 >
                                 Remember me
                             </label>
-
-                            <a href="#">
-                                Forgot Password?
-                            </a>
 
                         </div>
 

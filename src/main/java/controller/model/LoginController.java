@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import controller.model.repository.User;
 import controller.model.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -27,7 +31,14 @@ public class LoginController {
     // =====================================================
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(HttpServletRequest request, HttpSession session) {
+        if (session.getAttribute("userId") != null) return "redirect:/dashboard";
+        if (request.getCookies() != null) for (Cookie cookie : request.getCookies()) {
+            if ("lifelink_remember".equals(cookie.getName())) {
+                Optional<User> user = userRepository.findByRememberToken(cookie.getValue());
+                if (user.isPresent()) { startSession(session, user.get()); return "redirect:/dashboard"; }
+            }
+        }
         return "login";
     }
 
@@ -41,6 +52,8 @@ public class LoginController {
             @RequestParam String username,
             @RequestParam String password,
             HttpSession session,
+            @RequestParam(required = false) boolean remember,
+            HttpServletResponse response,
             Model model) {
 
         // Find user by username
@@ -90,10 +103,15 @@ public class LoginController {
         // SAVE USER INFORMATION IN SESSION
         // =================================================
 
-        session.setAttribute(
-                "userId",
-                user.getId()
-        );
+        startSession(session, user);
+
+        if (remember) {
+            String token = UUID.randomUUID().toString();
+            user.setRememberToken(token); userRepository.save(user);
+            Cookie cookie = new Cookie("lifelink_remember", token);
+            cookie.setHttpOnly(true); cookie.setPath("/"); cookie.setMaxAge(60 * 60 * 24 * 30);
+            response.addCookie(cookie);
+        }
 
         session.setAttribute(
                 "firstName",
@@ -145,5 +163,13 @@ public class LoginController {
         session.invalidate();
 
         return "redirect:/";
+    }
+
+    private void startSession(HttpSession session, User user) {
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("firstName", user.getFirstName());
+        session.setAttribute("lastName", user.getLastName());
+        session.setAttribute("role", user.getRole());
+        session.setAttribute("bloodType", user.getBloodType());
     }
 }

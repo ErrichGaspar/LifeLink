@@ -396,3 +396,6 @@ body.dark-mode .register-link {
 body.dark-mode .error-message {
     color: #ff6b6b;
 }
+
+.server-error { margin: 8px 0; color: #b20f0f; font-size: 13px; font-weight: 700; }
+@media(max-width:600px){.login-page{padding:20px 14px}.login-container{grid-template-columns:1fr;min-height:auto}.login-content{display:none}.login-right{padding:30px 24px}.login-right h1{font-size:30px}.login-options{align-items:flex-start;flex-direction:column;gap:10px}.login-button{min-height:46px}}

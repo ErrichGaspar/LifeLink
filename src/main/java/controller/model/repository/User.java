@@ -41,6 +41,8 @@ public class User {
 
     private String role;
 
+    private String rememberToken;
+
 
     // =========================
     // GETTERS AND SETTERS
@@ -183,5 +185,8 @@ public class User {
         this.role = role;
 
     }
+
+    public String getRememberToken() { return rememberToken; }
+    public void setRememberToken(String rememberToken) { this.rememberToken = rememberToken; }
 
 }

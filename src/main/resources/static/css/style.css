@@ -1207,9 +1207,21 @@ body.dark-mode .theme-toggle span {
 
 /* MOON */
 body.dark-mode .theme-toggle span::before {
-    content: "☾";
-
-    color: var(--blood-red);
-
-    font-size: 19px;
+    content: "";
 }
+
+/* QA refinements: stable viewport, fixed navigation, and a simple readable switch. */
+body { overflow-x: hidden; }
+.site-wrapper { min-height: 100vh; overflow: clip; }
+.navbar { position: sticky; top: 0; z-index: 1000; }
+.theme-toggle span::before { content: ""; }
+.theme-toggle { background: #c91d1d; }
+.theme-toggle span { background: #fff; }
+body.dark-mode .theme-toggle { background: #742020; }
+.feature-item { width: 100%; border: 0; text-align: left; font: inherit; cursor: pointer; }
+.feature-detail { display: block; max-height: 0; overflow: hidden; margin-top: 0; color: var(--text-gray); line-height: 1.55; transition: max-height .3s ease, margin .3s ease; }
+.feature-item.expanded { background: #ffe8e8; }
+.feature-item.expanded .feature-detail { max-height: 120px; margin-top: 13px; }
+body.dark-mode .feature-item.expanded { background: #4a2828; }
+body.dark-mode .feature-detail { color: var(--dark-muted); }
+@media(max-width:600px){.navbar{position:sticky;min-height:66px;padding:0 14px}.nav-menu{gap:12px;margin-right:10px}.nav-link{font-size:10px}.theme-toggle{width:48px;height:27px}.theme-toggle span{width:21px;height:21px}body.dark-mode .theme-toggle span{transform:translateX(21px)}.hero{padding:18px 14px 30px}.footer{padding-bottom:20px}}
