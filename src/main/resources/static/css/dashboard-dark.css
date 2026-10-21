@@ -190,8 +190,7 @@ body.dark-mode.dashboard-page .theme-toggle span {
 }
 
 body.dark-mode.dashboard-page .theme-toggle span::before {
-    content: "☾";
-    color: #354153;
+    content: "";
 }
 
 body.dark-mode.dashboard-page :is(button, a, input, select, textarea):focus-visible {
