@@ -1,0 +1,354 @@
+/* Shared phone layout refinements for public, donor, and admin pages. */
+@media (min-width: 1001px) {
+    .dashboard-page .sidebar {
+        width: 340px;
+        min-width: 340px;
+        height: min(860px, calc(100vh - 40px));
+        padding: 34px 24px 28px;
+    }
+
+    .dashboard-page .donor-profile { gap: 16px; }
+    .dashboard-page .big-avatar { width: 66px; height: 66px; min-width: 66px; font-size: 27px; }
+    .dashboard-page .donor-profile h3 { font-size: 20px; }
+    .dashboard-page .donor-profile p { font-size: 14px; }
+    .dashboard-page .menu { gap: 9px; }
+    .dashboard-page .menu a {
+        min-height: 60px;
+        gap: 15px;
+        padding: 14px 16px;
+        border-radius: 13px;
+        font-size: 15px;
+    }
+    .dashboard-page .menu a i { width: 24px; font-size: 19px; }
+    .dashboard-page .sidebar-tools { font-size: 15px; }
+    .dashboard-page .logout { min-height: 58px; font-size: 15px; }
+}
+
+@media (min-width: 1001px) and (max-height: 760px) {
+    .dashboard-page .sidebar {
+        position: relative;
+        top: auto;
+        height: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .site-wrapper {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Give the navigation a compact first row and a calm, legible second row. */
+    body:not(.dashboard-page) .navbar {
+        min-height: 0;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 16px;
+    }
+
+    body:not(.dashboard-page) .logo-image {
+        width: 38px;
+        height: 44px;
+        object-fit: contain;
+    }
+
+    body:not(.dashboard-page) .logo-text {
+        font-size: 29px;
+    }
+
+    body:not(.dashboard-page) .nav-menu {
+        order: 3;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2px 8px;
+        margin: 0;
+    }
+
+    body:not(.dashboard-page) .nav-link {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 2px;
+        font-size: 10px;
+        letter-spacing: .2px;
+    }
+
+    body:not(.dashboard-page) .theme-toggle {
+        display: flex;
+        width: 52px;
+        height: 30px;
+    }
+
+    body:not(.dashboard-page) .theme-toggle span {
+        width: 24px;
+        height: 24px;
+    }
+
+    body:not(.dashboard-page) .login-page { min-height: 0; padding: 18px 12px 28px; }
+    body:not(.dashboard-page) .login-container { min-height: 0; border-radius: 20px; }
+    body:not(.dashboard-page) .login-right { padding: 27px 19px; }
+    body:not(.dashboard-page) .login-right h1 { font-size: 29px; }
+    body:not(.dashboard-page) .login-form { max-width: none; }
+    body:not(.dashboard-page) .login-form input { min-height: 48px; font-size: 16px; }
+    body:not(.dashboard-page) .login-button { width: 100%; min-height: 48px; }
+
+    body:not(.dashboard-page) .register-page { min-height: 0; padding: 16px 11px 28px; }
+    body:not(.dashboard-page) .register-container { height: auto; min-height: 0; border-radius: 20px; }
+    body:not(.dashboard-page) .register-content { min-height: 140px; max-height: 140px; }
+    body:not(.dashboard-page) .register-right { padding: 25px 18px; }
+    body:not(.dashboard-page) .register-right h1 { font-size: 30px; }
+    body:not(.dashboard-page) .register-form input,
+    body:not(.dashboard-page) .register-form select { min-height: 48px; font-size: 16px; }
+    body:not(.dashboard-page) .register-form button { width: 100%; min-height: 48px; }
+
+    body:not(.dashboard-page) .learn-page { padding: 22px 13px 40px; }
+    body:not(.dashboard-page) .learn-page section { margin-bottom: 14px; padding: 19px 16px; border-radius: 16px; }
+    body:not(.dashboard-page) .learn-page h1 { font-size: clamp(30px, 9vw, 42px); }
+    body:not(.dashboard-page) .learn-page h2 { font-size: 23px; }
+    body:not(.dashboard-page) .learn-page p { font-size: 15px; line-height: 1.65; }
+    body:not(.dashboard-page) .learn-button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
+
+    /* Dashboard navigation stays compact, clear, and comfortable to tap. */
+    .dashboard-page .app-shell {
+        width: 100%;
+        min-width: 0;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .dashboard-page .sidebar {
+        width: auto;
+        min-width: 0;
+        height: auto;
+        max-height: none;
+        margin: 12px 12px 0;
+        padding: 14px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 0 10px;
+        border-radius: 18px;
+        overflow: visible;
+    }
+
+    .dashboard-page .donor-profile {
+        display: flex;
+        grid-column: 1 / -1;
+        gap: 11px;
+        margin: 0 0 12px;
+        padding: 0 2px 12px;
+    }
+
+    .dashboard-page .big-avatar {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        font-size: 19px;
+    }
+
+    .dashboard-page .donor-profile h3 { font-size: 15px; }
+    .dashboard-page .donor-profile p { font-size: 12px; }
+
+    .dashboard-page .menu {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+        margin: 0;
+    }
+
+    .dashboard-page .menu a {
+        min-width: 0;
+        min-height: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 3px;
+        border: 1px solid rgba(255, 255, 255, .13);
+        border-radius: 13px;
+        background: rgba(255, 255, 255, .09);
+        font-size: 10px;
+        line-height: 1.2;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .dashboard-page .menu a i {
+        width: auto;
+        font-size: 17px;
+    }
+
+    .dashboard-page .menu a.active {
+        background: #ffe0e0;
+        border-color: rgba(255, 255, 255, .72);
+        color: #9e1010;
+    }
+
+    .dashboard-page .sidebar-tools {
+        grid-column: 1;
+        margin: 10px 0 0;
+        padding: 0;
+        border: 0;
+        font-size: 12px;
+    }
+
+    .dashboard-page .sidebar-tools .theme-toggle {
+        width: 48px;
+        height: 28px;
+    }
+
+    .dashboard-page .sidebar-tools .theme-toggle span {
+        width: 22px;
+        height: 22px;
+    }
+
+    body.dark-mode.dashboard-page .theme-toggle span { transform: translateX(20px); }
+
+    .dashboard-page .logout {
+        grid-column: 2;
+        grid-row: 3;
+        min-width: 96px;
+        min-height: 46px;
+        margin: 10px 0 0;
+        padding: 9px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+    }
+
+    .dashboard-page .content {
+        width: 100%;
+        min-width: 0;
+        padding: 18px 14px 30px;
+    }
+
+    .dashboard-page .assessment-card,
+    .dashboard-page .profile-card,
+    .dashboard-page .donor-form,
+    .dashboard-page .donor-list-card,
+    .dashboard-page .panel,
+    .dashboard-page .stat-card,
+    .dashboard-page .welcome-card {
+        min-width: 0;
+        padding: 18px 16px;
+        border-radius: 17px;
+    }
+
+    .dashboard-page .assessment-card { margin-bottom: 14px; }
+    .dashboard-page .assessment-card h1,
+    .dashboard-page .page-heading h1 { font-size: clamp(25px, 7vw, 32px); line-height: 1.15; }
+    .dashboard-page .assessment-card h2 { font-size: 21px; }
+    .dashboard-page .assessment-card > p,
+    .dashboard-page .page-heading p:not(.eyebrow) { font-size: 14px; line-height: 1.55; }
+
+    .dashboard-page .question-grid,
+    .dashboard-page .form-grid,
+    .dashboard-page .profile-details {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 13px;
+        margin: 18px 0;
+    }
+
+    .dashboard-page .question-grid > div,
+    .dashboard-page .profile-details > div { min-width: 0; padding: 14px; }
+
+    .dashboard-page :is(input:not([type="radio"]):not([type="checkbox"]), select, textarea) {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .dashboard-page textarea { min-height: 100px; }
+
+    .dashboard-page :is(.primary-button, .secondary-button, .form-actions button, .form-actions a) {
+        min-height: 48px;
+        max-width: 100%;
+        padding: 11px 15px;
+        font-size: 14px;
+    }
+
+    .dashboard-page .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .dashboard-page .form-actions > * { width: 100%; }
+
+    .dashboard-page .status-card {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 8px 14px;
+        padding: 15px;
+    }
+
+    .dashboard-page .notice { padding: 13px 14px; font-size: 14px; line-height: 1.45; }
+
+    .dashboard-page .table-wrap {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
+    }
+
+    .dashboard-page .table-wrap table { min-width: 620px; }
+    .dashboard-page .table-wrap th,
+    .dashboard-page .table-wrap td { padding: 11px 10px; font-size: 12px; }
+
+    .dashboard-home .stat-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .dashboard-home .admin-grid,
+    .dashboard-home .admin-grid.top,
+    .dashboard-home .admin-grid.bottom { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .dashboard-home .recent { min-width: 0; overflow-x: auto; }
+    .dashboard-home .recent .admin-table-row { min-width: 500px; }
+    .dashboard-home .welcome-left { min-width: 0; }
+    .dashboard-home .welcome-copy { min-width: 0; }
+    .dashboard-home .welcome-card h1 { font-size: clamp(21px, 6vw, 27px); line-height: 1.25; }
+
+    .donors-page .page-heading { margin-bottom: 18px; }
+    .donors-page .profile-card-header { gap: 12px; }
+    .donors-page .profile-card h2 { font-size: 21px; overflow-wrap: anywhere; }
+    .donors-page .profile-avatar { width: 56px; height: 56px; font-size: 23px; }
+    .donors-page .blood-badge { margin-left: auto; padding: 10px 13px; font-size: 20px; }
+    .donors-page .search-form { align-items: stretch; gap: 10px; }
+    .donors-page .search-form > div { width: 100%; }
+    .donors-page .search-form input { min-height: 48px; padding-right: 92px; font-size: 16px; }
+    .donors-page .search-form button { min-height: 38px; }
+    .donors-page .row-actions { flex-wrap: wrap; }
+}
+
+@media (max-width: 380px) {
+    .dashboard-page .sidebar { margin-right: 9px; margin-left: 9px; padding: 11px; }
+    .dashboard-page .menu { gap: 5px; }
+    .dashboard-page .menu a { min-height: 66px; padding: 7px 2px; font-size: 9.5px; }
+    .dashboard-page .content { padding-right: 11px; padding-left: 11px; }
+    .dashboard-page .assessment-card,
+    .dashboard-page .profile-card,
+    .dashboard-page .donor-form,
+    .dashboard-page .donor-list-card,
+    .dashboard-page .panel,
+    .dashboard-page .stat-card,
+    .dashboard-page .welcome-card { padding: 15px 13px; }
+}
+
+@media (max-width: 700px) {
+    body.dark-mode.dashboard-page .menu a {
+        background: rgba(255, 255, 255, .045);
+        border-color: rgba(203, 216, 229, .12);
+        color: #d8e1ea;
+    }
+
+    body.dark-mode.dashboard-page .menu a.active {
+        background: #49303a;
+        border-color: #7d4b55;
+        color: #fff0ef;
+    }
+}
