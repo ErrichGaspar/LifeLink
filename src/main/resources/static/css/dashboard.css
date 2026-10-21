@@ -3219,3 +3219,74 @@ body.dark-mode .dashboard-page .assessment-card textarea { background: #242424; 
     .dashboard-page .assessment-card h1 { font-size: clamp(1.6rem, 6vw, 2rem); }
     .dashboard-page .menu { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* Keep donor and admin navigation panels the same compact size. */
+.dashboard-page .sidebar {
+    box-sizing: border-box;
+    align-self: flex-start;
+    position: sticky;
+    top: 20px;
+    height: min(760px, calc(100vh - 40px));
+    min-height: 0;
+    overflow: hidden;
+}
+
+.dashboard-page .donor-profile,
+.dashboard-page .sidebar-tools,
+.dashboard-page .logout {
+    flex-shrink: 0;
+}
+
+.dashboard-page .menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+@media (max-width: 1000px) {
+    .dashboard-page .sidebar {
+        position: relative;
+        top: auto;
+        align-self: stretch;
+        height: auto;
+        max-height: none;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .dashboard-page .menu {
+        flex: 0 0 auto;
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 700px) {
+    /* Both roles have six or seven links, which fit into the same two rows. */
+    .dashboard-page .menu {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .dashboard-page .menu a {
+        min-width: 0;
+        min-height: 62px;
+        padding: 7px 3px;
+        font-size: 10px;
+        line-height: 1.2;
+    }
+
+    .dashboard-page .menu a span {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .dashboard-page .sidebar-tools {
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+}
