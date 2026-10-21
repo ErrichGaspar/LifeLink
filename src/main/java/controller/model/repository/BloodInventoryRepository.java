@@ -1,2 +1,10 @@
 package controller.model.repository;
-import org.springframework.data.jpa.repository.JpaRepository; public interface BloodInventoryRepository extends JpaRepository<BloodInventory,String> {}
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import jakarta.persistence.LockModeType;
+import java.util.Optional;
+public interface BloodInventoryRepository extends JpaRepository<BloodInventory,String> {
+ @Lock(LockModeType.PESSIMISTIC_WRITE) @Query("select b from BloodInventory b where b.bloodType = :type") Optional<BloodInventory> findByTypeForUpdate(@Param("type") String type);
+}

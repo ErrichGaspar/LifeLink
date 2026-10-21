@@ -11,6 +11,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
     Optional<User> findByRememberToken(String rememberToken);
+    long countByRoleIgnoreCase(String role);
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select u from User u where u.id = :id")
+    Optional<User> findByIdForUpdate(@org.springframework.data.repository.query.Param("id") Long id);
 
     List<User> findByRoleIgnoreCaseOrderByLastNameAscFirstNameAsc(String role);
 

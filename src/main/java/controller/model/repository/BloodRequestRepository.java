@@ -1,3 +1,3 @@
 package controller.model.repository;
 import java.util.List; import org.springframework.data.jpa.repository.JpaRepository;
-public interface BloodRequestRepository extends JpaRepository<BloodRequest, Long> { List<BloodRequest> findAllByOrderByCreatedAtDesc(); long countByStatusNot(String status); }
+public interface BloodRequestRepository extends JpaRepository<BloodRequest, Long> { List<BloodRequest> findAllByOrderByCreatedAtDesc(); List<BloodRequest> findByRequesterIdOrderByCreatedAtDesc(Long requesterId); long countByStatusNot(String status); long countByStatusIgnoreCase(String status); @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE) @org.springframework.data.jpa.repository.Query("select r from BloodRequest r where r.id = :id") java.util.Optional<BloodRequest> findByIdForUpdate(@org.springframework.data.repository.query.Param("id") Long id); }

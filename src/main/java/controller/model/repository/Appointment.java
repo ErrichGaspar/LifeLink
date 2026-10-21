@@ -26,6 +26,7 @@ public class Appointment {
     private String location;
 
     private String status;
+    private Integer collectedUnits;
 
 
     public Appointment() {
@@ -84,4 +85,6 @@ public class Appointment {
     public void setStatus(String status) {
         this.status = status;
     }
+    public Integer getCollectedUnits() { return collectedUnits; }
+    public void setCollectedUnits(Integer collectedUnits) { this.collectedUnits = collectedUnits; }
 }

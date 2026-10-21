@@ -43,6 +43,10 @@ public class User {
 
     private String rememberToken;
 
+    /** Stable public-facing donor identifier derived from the immutable database key. */
+    @jakarta.persistence.Transient
+    public String getDonorId() { return id == null ? "Pending" : "LL-%06d".formatted(id); }
+
 
     // =========================
     // GETTERS AND SETTERS

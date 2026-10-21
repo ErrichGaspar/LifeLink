@@ -61,12 +61,13 @@
                     <span>Donation History</span>
                 </a>
 
-                <a href="#appointment">
+                <a th:if="${!admin}" href="#appointment">
                     <i class="fa-solid fa-phone-volume"></i>
                     <span>Upcoming Appointment</span>
                 </a>
 
-                <a href="#requests">
+                <a th:if="${admin}" href="/requests"><i class="fa-solid fa-droplet"></i><span>Blood Requests</span></a>
+                <a th:if="${!admin}" href="/requests">
                     <i class="fa-solid fa-droplet"></i>
                     <span>Blood Requests</span>
                 </a>
@@ -130,7 +131,7 @@
                         </span>
                         <div class="stat-copy">
                             <p>Donation Eligibility</p>
-                            <h2 class="green" th:text="${assessment != null ? assessment.eligibilityStatus : 'In Process'}">Eligible</h2>
+                            <h2 class="green" th:text="${currentEligibility != null ? currentEligibility : 'In Process'}">Eligible</h2>
                             <small th:text="${assessment != null ? 'Readiness score: ' + assessment.readinessScore + '/100' : 'Complete your health assessment.'}">You are eligible to donate.</small>
                             <a href="/assessment">View Details <span>→</span></a>
                         </div>
@@ -201,7 +202,7 @@
                             <b>›</b>
                         </a>
 
-                        <a href="#requests" class="quick-action">
+                        <a href="/requests" class="quick-action">
                             <span><i class="fa-solid fa-droplet"></i>View Blood Requests</span>
                             <b>›</b>
                         </a>
@@ -278,42 +279,42 @@
                 <article class="panel request-panel" id="requests">
                     <div class="panel-head">
                         <h3>Blood Requests</h3>
-                        <a href="#requests">View All</a>
+                        <a href="/requests">Submit / View</a>
                     </div>
                     <div class="line"></div>
 
-                    <div class="request-row">
+                    <div class="request-row" th:each="request : ${bloodRequests}">
                         <span class="request-icon">
                             <i class="fa-solid fa-droplet"></i>
                         </span>
 
                         <div class="request-patient">
                             <small>Patient</small>
-                            <strong>Juan Cruz</strong>
+                            <strong th:text="${request.patientName}">Patient</strong>
                             <span>
-                                <b>O+</b>
+                                <b th:text="${request.bloodType}">O+</b>
                                 <em>|</em>
-                                <b>2 Units</b>
+                                <b th:text="${request.units + ' Bags'}">2 Bags</b>
                             </span>
                         </div>
 
                         <div class="request-detail">
                             <small>Hospital</small>
-                            <strong>General Hospital</strong>
+                            <strong th:text="${request.hospital}">Hospital</strong>
                         </div>
 
                         <div class="request-detail priority">
                             <small>Priority</small>
-                            <span>Urgent</span>
+                            <span th:text="${request.priority}">Normal</span>
                         </div>
 
                         <div class="request-detail status">
                             <small>Status</small>
-                            <span>Pending</span>
+                            <span th:text="${request.status}">Pending</span>
                         </div>
 
-                        <button type="button" class="request-button">View Details</button>
                     </div>
+                    <p th:if="${#lists.isEmpty(bloodRequests)}">No blood requests are available.</p>
                 </article>
             </div>
 
@@ -331,7 +332,7 @@
                     <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-users"></i></span><div class="stat-copy"><p>Total Donors</p><h2 th:text="${totalDonors}">0</h2><small>Registered donors</small></div></article>
                     <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-droplet"></i></span><div class="stat-copy"><p>Total Donations</p><h2 th:text="${totalCompletedDonations}">0</h2><small>Completed donations</small></div></article>
                     <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-calendar-days"></i></span><div class="stat-copy"><p>Appointments</p><h2 th:text="${upcomingAppointments}">0</h2><small>Upcoming appointments</small></div></article>
-                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-heart-pulse"></i></span><div class="stat-copy"><p>Blood Requests</p><h2 th:text="${activeRequests}">0</h2><small>Active requests</small></div></article>
+                    <article class="stat-card"><span class="icon-circle"><i class="fa-solid fa-heart-pulse"></i></span><div class="stat-copy"><p>Pending Requests</p><h2 th:text="${pendingRequests}">0</h2><small>Awaiting review</small></div></article>
                 </section>
 
                 <section class="admin-grid">
@@ -339,23 +340,16 @@
                         <h3><i class="fa-solid fa-droplet"></i> Blood Inventory</h3>
                         <div class="line"></div>
                         <div class="inventory-list">
-                            <div><span>A+</span><em style="--w:75%"></em><b>75%</b></div>
-                            <div><span>A-</span><em style="--w:45%"></em><b>45%</b></div>
-                            <div><span>B+</span><em style="--w:62%"></em><b>62%</b></div>
-                            <div><span>B-</span><em style="--w:35%"></em><b>35%</b></div>
-                            <div><span>AB+</span><em style="--w:50%"></em><b>50%</b></div>
-                            <div><span>AB-</span><em style="--w:25%"></em><b>25%</b></div>
-                            <div><span>O+</span><em style="--w:88%"></em><b>88%</b></div>
-                            <div><span>O-</span><em style="--w:40%"></em><b>40%</b></div>
+                            <div th:each="entry : ${inventoryByType}"><span th:text="${entry.key}">A+</span><em th:style="'--w:' + (inventoryMax > 0 ? entry.value * 100 / inventoryMax : 0) + '%'" aria-hidden="true"></em><b th:text="${entry.value + ' bags'}">0 bags</b></div>
                         </div>
                     </article>
 
                     <article class="panel recent">
-                        <div class="panel-head"><h3>Recent Blood Requests</h3><a href="#">View All</a></div>
+                        <div class="panel-head"><h3>Recent Blood Requests</h3><a href="/requests">View All</a></div>
                         <div class="line"></div>
-                        <div class="admin-table-row heading"><span>Patient</span><span>Type</span><span>Units</span><span>Priority</span><span>Status</span></div>
-                        <div class="admin-table-row"><span>Juan Cruz</span><strong>O+</strong><span>2</span><b class="urgent">Urgent</b><em class="pending">Pending</em></div>
-                        <div class="admin-table-row"><span>Maria Santos</span><strong>A+</strong><span>1</span><b class="normal">Normal</b><em class="approved">Approved</em></div>
+                        <div class="admin-table-row heading"><span>Hospital</span><span>Type</span><span>Bags</span><span>Priority</span><span>Status</span></div>
+                        <div class="admin-table-row" th:each="request : ${bloodRequests}"><span th:text="${request.hospital}">Hospital</span><strong th:text="${request.bloodType}">O+</strong><span th:text="${request.units}">0</span><b th:text="${request.priority}">Normal</b><em th:text="${request.status}">Pending</em></div>
+                        <p th:if="${#lists.isEmpty(bloodRequests)}">No blood requests have been submitted.</p>
                     </article>
                 </section>
 
@@ -363,18 +357,15 @@
                     <article class="panel upcoming">
                         <div class="panel-head"><h3><i class="fa-regular fa-calendar-days"></i> Upcoming Appointments</h3></div>
                         <div class="line"></div>
-                        <div><i class="fa-solid fa-user"></i><span><b>Juan Cruz</b></span><b>9:00 AM</b></div>
-                        <div><i class="fa-solid fa-user"></i><span><b>Maria Santos</b></span><b>10:30 AM</b></div>
-                        <div><i class="fa-solid fa-user"></i><span><b>Pedro Reyes</b></span><b>1:00 PM</b></div>
+                        <div th:each="appointment : ${allAppointments}"><i class="fa-solid fa-user"></i><span><b th:text="${donorNames[appointment.userId] != null ? donorNames[appointment.userId] : 'Unknown donor'}">Donor</b></span><b th:text="${appointment.appointmentDate + ' ' + appointment.appointmentTime}">Date</b></div>
+                        <p th:if="${#lists.isEmpty(allAppointments)}">No upcoming appointments.</p>
                     </article>
 
                     <article class="panel chart">
-                        <h3><i class="fa-solid fa-chart-column"></i> Donations</h3>
-                        <p class="chart-label">This Month</p>
-                        <div class="bars" aria-label="Monthly donation chart">
-                            <i style="--h: 58%"></i><i style="--h: 75%"></i><i style="--h: 44%"></i><i style="--h: 85%"></i><i style="--h: 64%"></i><i style="--h: 76%"></i><i style="--h: 52%"></i>
-                        </div>
-                        <p>Donation Chart</p>
+                        <h3><i class="fa-solid fa-chart-column"></i> Recent Donations</h3>
+                        <div class="line"></div>
+                        <div class="admin-table-row" th:each="donation : ${recentDonations}"><span th:text="${donorNames[donation.userId] != null ? donorNames[donation.userId] : 'Unknown donor'}">Donor</span><strong th:text="${donation.bloodType}">O+</strong><span th:text="${donation.units + ' bags'}">0 bags</span><b th:text="${donation.donationDate}">Date</b></div>
+                        <p th:if="${#lists.isEmpty(recentDonations)}">No completed donations yet.</p>
                     </article>
                 </section>
             </div>

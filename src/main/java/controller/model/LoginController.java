@@ -15,11 +15,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 public class LoginController {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public LoginController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -65,8 +67,7 @@ public class LoginController {
         // CHECK USERNAME AND PASSWORD
         // =================================================
 
-        if (userOptional.isEmpty()
-                || !userOptional.get().getPassword().equals(password)) {
+        if (userOptional.isEmpty() || !passwordMatches(userOptional.get(), password)) {
 
             model.addAttribute(
                     "error",
@@ -79,6 +80,10 @@ public class LoginController {
 
         // Get the actual user from database
         User user = userOptional.get();
+        if (user.getPassword() != null && !user.getPassword().startsWith("$2") ) {
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        }
 
 
         // =================================================
@@ -171,5 +176,12 @@ public class LoginController {
         session.setAttribute("lastName", user.getLastName());
         session.setAttribute("role", user.getRole());
         session.setAttribute("bloodType", user.getBloodType());
+    }
+
+    private boolean passwordMatches(User user, String raw) {
+        if (user.getPassword() == null || raw == null) return false;
+        return user.getPassword().startsWith("$2")
+                ? passwordEncoder.matches(raw, user.getPassword())
+                : user.getPassword().equals(raw);
     }
 }

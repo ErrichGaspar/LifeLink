@@ -19,6 +19,10 @@ form?.addEventListener('submit', (event) => {
     if (confirmPassword.value !== pass) { show('#confirmPassword-error', 'Passwords do not match.'); valid = false; }
     if (!/^\+639\d{9}$/.test(phone)) { show('#phoneNumber-error', 'Use a Philippine number: +639 followed by 9 digits.'); valid = false; }
     if (!valid) event.preventDefault();
+    else {
+        const submit = form.querySelector('button[type="submit"]');
+        if (submit) { submit.disabled = true; submit.textContent = 'Creating account…'; }
+    }
 });
 const successModal = $('#registration-success-modal');
 if (successModal?.dataset.success === 'true') successModal.classList.add('active');

@@ -16,13 +16,15 @@ import controller.model.repository.HealthAssessment;
 import controller.model.repository.HealthAssessmentRepository;
 import controller.model.repository.User;
 import controller.model.repository.UserRepository;
+import controller.model.repository.DonationRepository;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HealthController {
     private final HealthAssessmentRepository assessments;
     private final UserRepository users;
-    public HealthController(HealthAssessmentRepository assessments, UserRepository users) { this.assessments = assessments; this.users = users; }
+    private final DonationRepository donations;
+    public HealthController(HealthAssessmentRepository assessments, UserRepository users, DonationRepository donations) { this.assessments = assessments; this.users = users; this.donations = donations; }
 
     @GetMapping("/assessment") public String assessment(HttpSession session, Model model) {
         if (!loggedIn(session)) return "redirect:/login";
@@ -43,7 +45,9 @@ public class HealthController {
         if (yes(assessment.getRecentSurgery()) || yes(assessment.getHighRiskExposure()) || yes(assessment.getPregnantOrBreastfeeding())) score -= 35;
         if (yes(assessment.getTakingMedication())) score -= 15;
         if (!yes(assessment.getFeelingWell())) score -= 25;
-        assessment.setReadinessScore(Math.max(0, score)); assessment.setEligibilityStatus(score >= 70 ? "ELIGIBLE" : score >= 45 ? "IN PROCESS" : "NOT ELIGIBLE");
+        assessment.setReadinessScore(Math.max(0, score));
+        LocalDate nextEligible = donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(userId(session), "COMPLETED").stream().map(d -> d.getNextEligibleDate()!=null?d.getNextEligibleDate():(d.getDonationDate()==null?null:d.getDonationDate().plusDays(90))).filter(java.util.Objects::nonNull).findFirst().orElse(null);
+        assessment.setEligibilityStatus(nextEligible != null && nextEligible.isAfter(LocalDate.now()) ? "IN PROCESS" : score >= 70 ? "ELIGIBLE" : score >= 45 ? "IN PROCESS" : "NOT ELIGIBLE");
         assessments.save(assessment); flash.addFlashAttribute("success", "Assessment saved. Your current status is " + assessment.getEligibilityStatus() + "."); return "redirect:/assessment";
     }
     private String review(HttpSession s, Model m) { m.addAttribute("admin", true); m.addAttribute("assessments", assessments.findAllByOrderBySubmittedAtDesc()); addProfile(s,m); return "assessment"; }

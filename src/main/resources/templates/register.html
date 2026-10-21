@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -170,6 +170,8 @@
                         Create your account to get started.
                     </p>
 
+                    <p class="notice error" role="alert" th:if="${error}" th:text="${error}"></p>
+
 
 
                     <!-- REGISTER FORM -->
@@ -197,6 +199,7 @@
                                     type="text"
                                     id="firstName"
                                     name="firstName"
+                                    th:value="${form != null ? form.firstName : ''}"
                                     placeholder="Enter your first name"
                                     required
                                 >
@@ -222,6 +225,7 @@
                                     type="text"
                                     id="lastName"
                                     name="lastName"
+                                    th:value="${form != null ? form.lastName : ''}"
                                     placeholder="Enter your last name"
                                     required
                                 >
@@ -252,6 +256,7 @@
                                 type="text"
                                 id="username"
                                 name="username"
+                                    th:value="${form != null ? form.username : ''}"
                                 placeholder="Enter your username"
                                 required
                             >
@@ -266,14 +271,11 @@
 
 
 
-                        <!-- HIDDEN ADMIN CODE -->
-
-                        <input
-                            type="hidden"
-                            id="adminCode"
-                            name="adminCode"
-                            value=""
-                        >
+                        <div class="form-group">
+                            <label for="adminCode">Admin invitation code <span>(optional)</span></label>
+                            <input type="password" id="adminCode" name="adminCode" autocomplete="off">
+                            <small>Leave blank to create a donor account. Admin access requires an invitation configured by the system owner.</small>
+                        </div>
 
 
 
@@ -365,7 +367,7 @@
                                     type="tel"
                                     id="phoneNumber"
                                     name="phoneNumber"
-                                    value="+63"
+                                    th:value="${form != null and form.phoneNumber != null ? form.phoneNumber : '+63'}"
                                     placeholder="+63 9XXXXXXXXX"
                                     required
                                 >
@@ -401,14 +403,14 @@
                                         Select your blood type
                                     </option>
 
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
+                                    <option value="A+" th:selected="${form != null and form.bloodType == 'A+'}">A+</option>
+                                    <option value="A-" th:selected="${form != null and form.bloodType == 'A-'}">A-</option>
+                                    <option value="B+" th:selected="${form != null and form.bloodType == 'B+'}">B+</option>
+                                    <option value="B-" th:selected="${form != null and form.bloodType == 'B-'}">B-</option>
+                                    <option value="AB+" th:selected="${form != null and form.bloodType == 'AB+'}">AB+</option>
+                                    <option value="AB-" th:selected="${form != null and form.bloodType == 'AB-'}">AB-</option>
+                                    <option value="O+" th:selected="${form != null and form.bloodType == 'O+'}">O+</option>
+                                    <option value="O-" th:selected="${form != null and form.bloodType == 'O-'}">O-</option>
 
                                 </select>
 
@@ -749,9 +751,7 @@
             </div>
 
 
-            <h2>
-                Registration Successful!
-            </h2>
+            <h2>Account created successfully!</h2>
 
 
             <p>
@@ -764,13 +764,7 @@
             </p>
 
 
-            <button
-                type="button"
-                id="go-to-login"
-                class="go-to-login-button"
-            >
-                GO TO LOG IN
-            </button>
+            <a id="go-to-login" class="go-to-login-button" href="/login">Log In</a>
 
 
         </div>
