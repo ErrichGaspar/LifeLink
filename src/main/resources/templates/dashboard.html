@@ -271,7 +271,7 @@
                         <h3><i class="fa-solid fa-droplet"></i> Blood Inventory</h3>
                         <div class="line"></div>
                         <div class="inventory-list">
-                            <div th:each="entry : ${inventoryByType}"><span th:text="${entry.key}">A+</span><em th:style="'--w:' + (inventoryMax > 0 ? entry.value * 100 / inventoryMax : 0) + '%'" aria-hidden="true"></em><b th:text="${entry.value + ' bags'}">0 bags</b></div>
+                            <div th:each="entry : ${inventoryByType}"><span th:text="${entry.key}">A+</span><em th:style="|--w:${inventoryMax > 0 ? (entry.value * 100 / inventoryMax) : 0}%|" aria-hidden="true"></em><b th:text="${entry.value + ' bags'}">0 bags</b></div>
                         </div>
                     </article>
 

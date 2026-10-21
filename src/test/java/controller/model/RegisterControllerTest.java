@@ -131,6 +131,32 @@ class RegisterControllerTest {
     }
 
     @Test
+    void loginAcceptsSpringPrefixedAdminRoleAndStoresCanonicalSessionRole() {
+        User admin = new User();
+        admin.setId(8L);
+        admin.setUsername("prefixed-admin");
+        admin.setRole("ROLE_ADMIN");
+        admin.setPassword(new BCryptPasswordEncoder().encode("LifeLink.123"));
+        usersByUsername.put(admin.getUsername(), admin);
+        Map<String, Object> sessionValues = new HashMap<>();
+        HttpSession session = (HttpSession) Proxy.newProxyInstance(HttpSession.class.getClassLoader(),
+                new Class<?>[] { HttpSession.class }, (proxy, method, args) -> {
+                    if (method.getName().equals("setAttribute")) { sessionValues.put((String) args[0], args[1]); return null; }
+                    if (method.getName().equals("getAttribute")) return sessionValues.get(args[0]);
+                    return null;
+                });
+        LoginController login = new LoginController(users);
+
+        String result = login.login("prefixed-admin", "LifeLink.123", session, false, request(false),
+                (HttpServletResponse) Proxy.newProxyInstance(HttpServletResponse.class.getClassLoader(),
+                        new Class<?>[] { HttpServletResponse.class }, (proxy, method, args) -> null),
+                new ExtendedModelMap());
+
+        assertEquals("redirect:/dashboard", result);
+        assertEquals("ADMIN", sessionValues.get("role"));
+    }
+
+    @Test
     void rememberMeCookieIsPersistentAndLogoutInvalidatesItsToken() {
         User donor = new User();
         donor.setId(12L);

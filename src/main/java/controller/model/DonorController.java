@@ -199,7 +199,7 @@ public class DonorController {
 
     private boolean isAdmin(HttpSession session) {
         Object role = session.getAttribute("role");
-        return role != null && "ADMIN".equalsIgnoreCase(role.toString());
+        return role != null && "ADMIN".equals(RoleNames.canonical(role.toString()));
     }
 
     private void addSessionProfile(Model model, HttpSession session) {

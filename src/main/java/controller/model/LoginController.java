@@ -37,11 +37,19 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginPage(HttpServletRequest request, HttpSession session) {
-        if (session.getAttribute("userId") != null) return "redirect:/dashboard";
+        if (session.getAttribute("userId") != null) {
+            String role = RoleNames.canonical(String.valueOf(session.getAttribute("role")));
+            if (role != null) session.setAttribute("role", role);
+            if (role == null) {
+                session.invalidate();
+                return "login";
+            }
+            return "redirect:/dashboard";
+        }
         if (request.getCookies() != null) for (Cookie cookie : request.getCookies()) {
             if ("lifelink_remember".equals(cookie.getName())) {
                 Optional<User> user = userRepository.findByRememberToken(cookie.getValue());
-                if (user.isPresent()) { startSession(session, user.get()); return "redirect:/dashboard"; }
+                if (user.isPresent() && startSession(session, user.get())) return "redirect:/dashboard";
             }
         }
         return "login";
@@ -107,7 +115,8 @@ public class LoginController {
             userRepository.save(user);
         }
 
-        if (!"ADMIN".equalsIgnoreCase(role) && !"DONOR".equalsIgnoreCase(role)) {
+        role = RoleNames.canonical(role);
+        if (role == null) {
             model.addAttribute("error", "This account does not have a valid LifeLink role. Contact an administrator.");
             return "login";
         }
@@ -201,12 +210,15 @@ public class LoginController {
         response.addHeader(HttpHeaders.SET_COOKIE, rememberCookie("", Duration.ZERO, secure).toString());
     }
 
-    private void startSession(HttpSession session, User user) {
+    private boolean startSession(HttpSession session, User user) {
+        String role = RoleNames.canonical(user.getRole());
+        if (role == null) return false;
         session.setAttribute("userId", user.getId());
         session.setAttribute("firstName", user.getFirstName());
         session.setAttribute("lastName", user.getLastName());
-        session.setAttribute("role", user.getRole());
+        session.setAttribute("role", role);
         session.setAttribute("bloodType", user.getBloodType());
+        return true;
     }
 
     private boolean passwordMatches(User user, String raw) {

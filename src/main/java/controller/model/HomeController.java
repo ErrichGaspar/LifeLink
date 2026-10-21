@@ -18,8 +18,9 @@ public class HomeController {
     @GetMapping("/learn-more") public String learnMore(){return "learn-more";}
     @GetMapping("/dashboard") public String dashboard(HttpSession s,Model m){
         Object sessionUser=s.getAttribute("userId"); if(sessionUser==null)return "redirect:/login";
-        Long userId=((Number)sessionUser).longValue(); String role=String.valueOf(s.getAttribute("role")); boolean admin="ADMIN".equalsIgnoreCase(role);
-        if (!admin && !"DONOR".equalsIgnoreCase(role)) return "redirect:/login";
+        Long userId=((Number)sessionUser).longValue(); String role=RoleNames.canonical(String.valueOf(s.getAttribute("role"))); boolean admin="ADMIN".equals(role);
+        if (role == null) return "redirect:/login";
+        s.setAttribute("role", role);
         m.addAttribute("firstName",s.getAttribute("firstName"));m.addAttribute("lastName",s.getAttribute("lastName"));m.addAttribute("role",role);m.addAttribute("bloodType",s.getAttribute("bloodType"));m.addAttribute("admin",admin);m.addAttribute("activePage","dashboard");
         var userAppointments=appointments.findByUserIdOrderByAppointmentDateAscAppointmentTimeAsc(userId);
         m.addAttribute("upcomingAppointment",userAppointments.stream().filter(a->a.getAppointmentDate()!=null&&!a.getAppointmentDate().isBefore(LocalDate.now())&&List.of("UPCOMING","CONFIRMED").contains(String.valueOf(a.getStatus()).toUpperCase())).findFirst().orElse(null));

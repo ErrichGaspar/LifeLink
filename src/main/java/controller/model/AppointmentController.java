@@ -147,7 +147,7 @@ public class AppointmentController {
     }
     private String clean(String value) { return value == null ? "" : value.trim(); }
     private boolean logged(HttpSession s) { return s.getAttribute("userId") != null; }
-    private boolean admin(HttpSession s) { return "ADMIN".equalsIgnoreCase(String.valueOf(s.getAttribute("role"))); }
+    private boolean admin(HttpSession s) { return "ADMIN".equals(RoleNames.canonical(String.valueOf(s.getAttribute("role")))); }
     private Long uid(HttpSession s) { return ((Number)s.getAttribute("userId")).longValue(); }
     private void add(HttpSession s, Model m) { m.addAttribute("firstName", s.getAttribute("firstName")); m.addAttribute("admin", admin(s)); }
 }

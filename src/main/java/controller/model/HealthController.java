@@ -54,6 +54,6 @@ public class HealthController {
     private String review(HttpSession s, Model m) { m.addAttribute("admin", true); m.addAttribute("activePage", "assessment"); m.addAttribute("assessments", assessments.findAllByOrderBySubmittedAtDesc()); addProfile(s,m); return "assessment"; }
     private boolean unanswered(HealthAssessment a) { return blank(a.getFeelingWell())||blank(a.getHasFever())||blank(a.getTakingMedication())||blank(a.getRecentSurgery())||blank(a.getPregnantOrBreastfeeding())||blank(a.getHighRiskExposure()); }
     private boolean yes(String v){return "YES".equalsIgnoreCase(v);} private boolean blank(String v){return v==null||v.isBlank();}
-    private boolean loggedIn(HttpSession s){return s.getAttribute("userId")!=null;} private boolean admin(HttpSession s){return "ADMIN".equalsIgnoreCase(String.valueOf(s.getAttribute("role")));} private Long userId(HttpSession s){return ((Number)s.getAttribute("userId")).longValue();}
+    private boolean loggedIn(HttpSession s){return s.getAttribute("userId")!=null;} private boolean admin(HttpSession s){return "ADMIN".equals(RoleNames.canonical(String.valueOf(s.getAttribute("role"))));} private Long userId(HttpSession s){return ((Number)s.getAttribute("userId")).longValue();}
     private void addProfile(HttpSession s, Model m){m.addAttribute("firstName",s.getAttribute("firstName"));m.addAttribute("admin",admin(s));}
 }
