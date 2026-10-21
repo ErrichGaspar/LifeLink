@@ -11,7 +11,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +28,6 @@ class RegisterControllerTest {
     void setUp() {
         users = mock(UserRepository.class);
         controller = new RegisterController(users);
-        ReflectionTestUtils.setField(controller, "adminInviteCode", ADMIN_CODE);
         when(users.findByUsername(anyString())).thenReturn(Optional.empty());
         when(users.saveAndFlush(any(User.class))).thenAnswer(call -> call.getArgument(0));
     }
@@ -50,6 +48,18 @@ class RegisterControllerTest {
     }
 
     @Test
+    void verificationEndpointAcceptsOnlyTheExactAdminCode() {
+        assertEquals("true", controller.verifyAdminCode(ADMIN_CODE).get("valid"));
+        assertEquals("false", controller.verifyAdminCode("LIFELINK-ADMIN-2026 ").get("valid"));
+    }
+
+    @Test
+    void verificationEndpointExplainsEmptyCode() {
+        assertEquals("Enter the admin confirmation code to continue.",
+                controller.verifyAdminCode("").get("message"));
+    }
+
+    @Test
     void codeDoesNotPromoteUsernameWithoutDigits() {
         User saved = submit("donorname", ADMIN_CODE);
         assertEquals("DONOR", saved.getRole());
@@ -65,11 +75,32 @@ class RegisterControllerTest {
     }
 
     @Test
+    void numericUsernameWithEmptyCodeIsRejectedWithoutSaving() {
+        ExtendedModelMap model = new ExtendedModelMap();
+        String view = submit("donor123", "", model);
+        assertEquals("register", view);
+        assertTrue(String.valueOf(model.get("adminCodeError")).contains("Enter the admin confirmation code"));
+        verify(users, never()).saveAndFlush(any(User.class));
+    }
+
+    @Test
     void numericUsernameWithIncorrectCodeIsRejected() {
         ExtendedModelMap model = new ExtendedModelMap();
         String view = submit("donor123", "wrong-code", model);
         assertEquals("register", view);
         assertEquals("The admin confirmation code is incorrect.", model.get("adminCodeError"));
+        verify(users, never()).saveAndFlush(any(User.class));
+    }
+
+    @Test
+    void duplicateUsernameIsRejectedWithoutSaving() {
+        User existing = new User();
+        existing.setUsername("donorname");
+        when(users.findByUsername("donorname")).thenReturn(Optional.of(existing));
+        ExtendedModelMap model = new ExtendedModelMap();
+        String view = submit("donorname", null, model);
+        assertEquals("register", view);
+        assertEquals("Username already exists.", model.get("error"));
         verify(users, never()).saveAndFlush(any(User.class));
     }
 

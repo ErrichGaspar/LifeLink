@@ -8,6 +8,7 @@ const username = $('#username');
 const adminModal = $('#admin-confirmation-modal');
 const adminCodeInput = $('#admin-confirmation-code');
 const submitButton = form?.querySelector('button[type="submit"]');
+let adminVerificationAttempt = 0;
 
 const openAdminModal = () => {
     if (!adminModal) return;
@@ -15,8 +16,11 @@ const openAdminModal = () => {
     adminCodeInput?.focus();
 };
 const closeAdminModal = () => {
+    adminVerificationAttempt++;
     adminModal?.classList.remove('active');
     if (adminCodeInput) adminCodeInput.value = '';
+    const confirmButton = $('#confirm-admin-registration');
+    if (confirmButton) confirmButton.disabled = false;
     form?.querySelector('input[name="adminCode"]')?.remove();
     if (form) delete form.dataset.adminConfirmed;
     submitButton?.focus();
@@ -55,10 +59,30 @@ form?.addEventListener('submit', (event) => {
     if (submitButton) { submitButton.disabled = true; submitButton.textContent = 'Creating account…'; }
 });
 
-$('#confirm-admin-registration')?.addEventListener('click', () => {
+$('#confirm-admin-registration')?.addEventListener('click', async () => {
     const code = adminCodeInput?.value || '';
-    if (!code.trim()) {
-        show('#admin-code-error', 'Enter the admin confirmation code to continue.');
+    const attempt = ++adminVerificationAttempt;
+    const confirmButton = $('#confirm-admin-registration');
+    confirmButton.disabled = true;
+    show('#admin-code-error', '');
+    let verification;
+    try {
+        const response = await fetch('/register/verify-admin-code', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ adminCode: code })
+        });
+        verification = await response.json();
+    } catch (error) {
+        if (attempt !== adminVerificationAttempt || !adminModal.classList.contains('active')) return;
+        show('#admin-code-error', 'We could not verify the code. Check your connection and try again.');
+        confirmButton.disabled = false;
+        return;
+    }
+    if (attempt !== adminVerificationAttempt || !adminModal.classList.contains('active')) return;
+    if (verification.valid !== 'true') {
+        show('#admin-code-error', verification.message || 'The admin confirmation code is incorrect.');
+        confirmButton.disabled = false;
         adminCodeInput?.focus();
         return;
     }
