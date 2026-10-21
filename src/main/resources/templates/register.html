@@ -616,15 +616,15 @@
             <div class="admin-confirmation-header">
                 <span class="admin-confirmation-icon" aria-hidden="true">🔒</span>
                 <div>
-                    <h2 id="admin-confirmation-title">Admin Verification Required</h2>
+                    <h2 id="admin-confirmation-title">Admin Registration Confirmation</h2>
                 </div>
             </div>
             <div class="admin-confirmation-body">
-                <p>Your username contains a number. Enter the admin confirmation code to complete your registration as an administrator.</p>
+                <p>Your username contains a number. Please enter the admin confirmation code to verify your administrator registration.</p>
                 <div class="admin-code-group">
                     <label for="admin-confirmation-code">Admin confirmation code</label>
                     <div class="admin-code-wrapper">
-                        <input type="text" id="admin-confirmation-code" placeholder="Enter admin confirmation code" autocomplete="off" aria-describedby="admin-code-error">
+                        <input type="text" id="admin-confirmation-code" placeholder="Enter confirmation code" autocomplete="off" aria-describedby="admin-code-error">
                     </div>
                     <small class="admin-code-error" id="admin-code-error" role="alert" th:text="${adminCodeError}"></small>
                 </div>
