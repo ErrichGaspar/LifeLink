@@ -3238,11 +3238,9 @@ body.dark-mode .dashboard-page .assessment-card textarea { background: #242424; 
 }
 
 .dashboard-page .menu {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+    flex: 0 0 auto;
+    min-height: auto;
+    overflow: visible;
 }
 
 @media (max-width: 1000px) {
@@ -3260,6 +3258,15 @@ body.dark-mode .dashboard-page .assessment-card textarea { background: #242424; 
         flex: 0 0 auto;
         max-height: none;
         overflow: visible;
+    }
+}
+
+@media (min-width: 1001px) and (max-height: 760px) {
+    .dashboard-page .sidebar {
+        position: relative;
+        top: auto;
+        height: auto;
+        max-height: none;
     }
 }
 
