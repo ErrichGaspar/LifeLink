@@ -15,6 +15,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import java.time.Duration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
@@ -55,6 +58,7 @@ public class LoginController {
             @RequestParam String password,
             HttpSession session,
             @RequestParam(required = false) boolean remember,
+            HttpServletRequest request,
             HttpServletResponse response,
             Model model) {
 
@@ -103,6 +107,11 @@ public class LoginController {
             userRepository.save(user);
         }
 
+        if (!"ADMIN".equalsIgnoreCase(role) && !"DONOR".equalsIgnoreCase(role)) {
+            model.addAttribute("error", "This account does not have a valid LifeLink role. Contact an administrator.");
+            return "login";
+        }
+
 
         // =================================================
         // SAVE USER INFORMATION IN SESSION
@@ -113,9 +122,13 @@ public class LoginController {
         if (remember) {
             String token = UUID.randomUUID().toString();
             user.setRememberToken(token); userRepository.save(user);
-            Cookie cookie = new Cookie("lifelink_remember", token);
-            cookie.setHttpOnly(true); cookie.setPath("/"); cookie.setMaxAge(60 * 60 * 24 * 30);
-            response.addCookie(cookie);
+            response.addHeader(HttpHeaders.SET_COOKIE, rememberCookie(token, Duration.ofDays(30), request.isSecure()).toString());
+        } else {
+            if (user.getRememberToken() != null) {
+                user.setRememberToken(null);
+                userRepository.save(user);
+            }
+            clearRememberCookie(response, request.isSecure());
         }
 
         session.setAttribute(
@@ -163,11 +176,29 @@ public class LoginController {
     // =====================================================
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-
+    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        Object userId = session.getAttribute("userId");
+        if (userId instanceof Number id) {
+            userRepository.findById(id.longValue()).ifPresent(user -> {
+                if (user.getRememberToken() != null) {
+                    user.setRememberToken(null);
+                    userRepository.save(user);
+                }
+            });
+        }
         session.invalidate();
+        clearRememberCookie(response, request.isSecure());
 
         return "redirect:/";
+    }
+
+    private ResponseCookie rememberCookie(String value, Duration maxAge, boolean secure) {
+        return ResponseCookie.from("lifelink_remember", value).httpOnly(true).secure(secure)
+                .sameSite("Lax").path("/").maxAge(maxAge).build();
+    }
+
+    private void clearRememberCookie(HttpServletResponse response, boolean secure) {
+        response.addHeader(HttpHeaders.SET_COOKIE, rememberCookie("", Duration.ZERO, secure).toString());
     }
 
     private void startSession(HttpSession session, User user) {

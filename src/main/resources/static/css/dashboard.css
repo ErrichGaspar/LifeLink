@@ -2161,7 +2161,7 @@ body.dark-mode .notification-dot {
    ========================================================= */
 
 body.dark-mode .sidebar {
-    background-color: var(--dark-card);
+    background: var(--dark-card);
 
     border-right-color: var(--dark-border);
 
@@ -3128,29 +3128,28 @@ body.dark-mode .bars {
     }
 
     .sidebar {
-        width: 380px;
-        min-width: 380px;
+        width: 286px;
+        min-width: 286px;
         position: sticky;
         top: 20px;
         height: auto;
         min-height: calc(100vh - 148px);
-        padding: 46px 32px 38px;
-        margin: 20px 0 20px 24px;
-        border-radius: 28px;
+        padding: 30px 20px 24px;
+        margin: 20px 0 20px 22px;
+        border-radius: 22px;
         overflow: visible;
         box-shadow: 0 14px 32px rgba(93, 0, 0, 0.22);
     }
 
-    .big-avatar { width: 78px; height: 78px; min-width: 78px; font-size: 31px; }
-    .donor-profile { gap: 19px; padding-bottom: 35px; }
-    .donor-profile h3 { font-size: 23px; }
-    .donor-profile p { font-size: 17px; }
-    .admin-title { font-size: 18px; }
-    .menu { gap: 13px; }
-    .menu a { min-height: 68px; gap: 19px; padding: 15px 18px; font-size: 18px; }
-    .menu a i { width: 27px; font-size: 21px; }
-    .admin-dashboard-link { min-height: 66px; font-size: 18px; }
-    .logout { min-height: 63px; font-size: 18px; }
+    .big-avatar { width: 58px; height: 58px; min-width: 58px; font-size: 23px; }
+    .donor-profile { gap: 14px; padding-bottom: 24px; }
+    .donor-profile h3 { font-size: 17px; }
+    .donor-profile p { font-size: 13px; }
+    .admin-title { font-size: 14px; }
+    .menu { gap: 8px; }
+    .menu a { min-height: 52px; gap: 12px; padding: 11px 12px; font-size: 14px; }
+    .menu a i { width: 22px; font-size: 17px; }
+    .logout { min-height: 50px; font-size: 14px; }
 }
 
 @media (max-width: 1000px) {
@@ -3158,4 +3157,65 @@ body.dark-mode .bars {
         margin: 0;
         border-radius: 0;
     }
+}
+
+/* Shared dashboard finishing styles for all donor and admin pages. */
+.dashboard-page .app-shell { align-items: stretch; }
+.dashboard-page .content { flex: 1 1 auto; min-width: 0; }
+.dashboard-page .menu a:focus-visible,
+.dashboard-page .logout:focus-visible,
+.dashboard-page button:focus-visible,
+.dashboard-page .primary-button:focus-visible,
+.dashboard-page .secondary-button:focus-visible {
+    outline: 3px solid #ffd166;
+    outline-offset: 3px;
+}
+.dashboard-page .assessment-card input,
+.dashboard-page .assessment-card select,
+.dashboard-page .assessment-card textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #d7b9b9;
+    border-radius: 9px;
+    background: #fff;
+    color: #332626;
+    font: inherit;
+}
+.dashboard-page .assessment-card input:focus,
+.dashboard-page .assessment-card select:focus,
+.dashboard-page .assessment-card textarea:focus {
+    border-color: #a70707;
+    outline: 3px solid rgba(201, 29, 29, .16);
+}
+.dashboard-page .primary-button,
+.dashboard-page .secondary-button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 9px;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.dashboard-page .primary-button { border: 1px solid #a70707; background: #a70707; color: #fff; }
+.dashboard-page .primary-button:hover { border-color: #780000; background: #780000; box-shadow: 0 4px 12px rgba(93, 0, 0, .18); }
+.dashboard-page .secondary-button { border: 1px solid #c9a8a8; background: #fff; color: #790d0d; }
+.dashboard-page .secondary-button:hover { background: #fff0f0; }
+.dashboard-page button:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
+.dashboard-page .status-badge { display: inline-flex; padding: 5px 10px; border-radius: 999px; background: #fff0d6; color: #724800; font-size: .875rem; font-weight: 700; }
+body.dark-mode .dashboard-page .assessment-card { background: var(--dark-card); border-color: var(--dark-border); color: var(--dark-text); }
+body.dark-mode .dashboard-page .assessment-card > p { color: var(--dark-muted); }
+body.dark-mode .dashboard-page .assessment-card input,
+body.dark-mode .dashboard-page .assessment-card select,
+body.dark-mode .dashboard-page .assessment-card textarea { background: #242424; border-color: #565656; color: var(--dark-text); }
+@media (max-width: 700px) {
+    .dashboard-page .content.form-content { padding: 20px 14px 30px; }
+    .dashboard-page .assessment-card h1 { font-size: clamp(1.6rem, 6vw, 2rem); }
+    .dashboard-page .menu { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

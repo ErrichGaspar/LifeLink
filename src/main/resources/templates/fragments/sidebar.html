@@ -1,0 +1,34 @@
+<aside class="sidebar" th:fragment="sidebar(isAdmin, activePage)">
+    <div class="donor-profile">
+        <div class="big-avatar"><i class="fa-solid fa-user" aria-hidden="true"></i></div>
+        <div class="profile-copy">
+            <h3 th:text="${firstName != null ? firstName : (isAdmin ? 'Administrator' : 'Donor')}">LifeLink</h3>
+            <p th:text="${isAdmin ? 'Administrator account' : 'Donor account'}">Donor account</p>
+        </div>
+    </div>
+
+    <nav class="menu" th:if="${isAdmin}" aria-label="Administrator navigation">
+        <a href="/dashboard" th:classappend="${activePage == 'dashboard' ? 'active' : ''}" th:attr="aria-current=${activePage == 'dashboard' ? 'page' : null}"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Dashboard</span></a>
+        <a href="/donors" th:classappend="${activePage == 'donors' ? 'active' : ''}" th:attr="aria-current=${activePage == 'donors' ? 'page' : null}"><i class="fa-solid fa-users" aria-hidden="true"></i><span>Donor Management</span></a>
+        <a href="/donation" th:classappend="${activePage == 'appointments' ? 'active' : ''}" th:attr="aria-current=${activePage == 'appointments' ? 'page' : null}"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>Appointments</span></a>
+        <a href="/records" th:classappend="${activePage == 'records' ? 'active' : ''}" th:attr="aria-current=${activePage == 'records' ? 'page' : null}"><i class="fa-solid fa-file-medical" aria-hidden="true"></i><span>Donation Records</span></a>
+        <a href="/assessment" th:classappend="${activePage == 'assessment' ? 'active' : ''}" th:attr="aria-current=${activePage == 'assessment' ? 'page' : null}"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i><span>Eligibility Review</span></a>
+        <a href="/requests" th:classappend="${activePage == 'requests' ? 'active' : ''}" th:attr="aria-current=${activePage == 'requests' ? 'page' : null}"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span>Blood Requests</span></a>
+        <a href="/reports" th:classappend="${activePage == 'reports' ? 'active' : ''}" th:attr="aria-current=${activePage == 'reports' ? 'page' : null}"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>Reports</span></a>
+    </nav>
+
+    <nav class="menu" th:unless="${isAdmin}" aria-label="Donor navigation">
+        <a href="/dashboard" th:classappend="${activePage == 'dashboard' ? 'active' : ''}" th:attr="aria-current=${activePage == 'dashboard' ? 'page' : null}"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Dashboard</span></a>
+        <a href="/donors" th:classappend="${activePage == 'profile' ? 'active' : ''}" th:attr="aria-current=${activePage == 'profile' ? 'page' : null}"><i class="fa-solid fa-user" aria-hidden="true"></i><span>My Profile</span></a>
+        <a href="/assessment" th:classappend="${activePage == 'assessment' ? 'active' : ''}" th:attr="aria-current=${activePage == 'assessment' ? 'page' : null}"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i><span>Donation Eligibility</span></a>
+        <a href="/donation" th:classappend="${activePage == 'appointments' ? 'active' : ''}" th:attr="aria-current=${activePage == 'appointments' ? 'page' : null}"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>Schedule a Donation</span></a>
+        <a href="/reports" th:classappend="${activePage == 'reports' ? 'active' : ''}" th:attr="aria-current=${activePage == 'reports' ? 'page' : null}"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>My Donations</span></a>
+        <a href="/requests" th:classappend="${activePage == 'requests' ? 'active' : ''}" th:attr="aria-current=${activePage == 'requests' ? 'page' : null}"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span>My Blood Requests</span></a>
+    </nav>
+
+    <div class="sidebar-tools">
+        <span>Dark mode</span>
+        <button class="theme-toggle" type="button" aria-label="Toggle dark mode"><span></span></button>
+    </div>
+    <a href="/logout" class="logout"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Log out</span></a>
+</aside>

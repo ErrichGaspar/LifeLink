@@ -30,6 +30,7 @@ public class HealthController {
         if (!loggedIn(session)) return "redirect:/login";
         if (admin(session)) return review(session, model);
         Long id = userId(session); model.addAttribute("assessment", assessments.findFirstByUserIdOrderBySubmittedAtDesc(id).orElse(new HealthAssessment()));
+        model.addAttribute("activePage", "assessment");
         addProfile(session, model); return "assessment";
     }
     @PostMapping("/assessment") public String submit(HealthAssessment assessment, HttpSession session, RedirectAttributes flash) {
@@ -50,7 +51,7 @@ public class HealthController {
         assessment.setEligibilityStatus(nextEligible != null && nextEligible.isAfter(LocalDate.now()) ? "IN PROCESS" : score >= 70 ? "ELIGIBLE" : score >= 45 ? "IN PROCESS" : "NOT ELIGIBLE");
         assessments.save(assessment); flash.addFlashAttribute("success", "Assessment saved. Your current status is " + assessment.getEligibilityStatus() + "."); return "redirect:/assessment";
     }
-    private String review(HttpSession s, Model m) { m.addAttribute("admin", true); m.addAttribute("assessments", assessments.findAllByOrderBySubmittedAtDesc()); addProfile(s,m); return "assessment"; }
+    private String review(HttpSession s, Model m) { m.addAttribute("admin", true); m.addAttribute("activePage", "assessment"); m.addAttribute("assessments", assessments.findAllByOrderBySubmittedAtDesc()); addProfile(s,m); return "assessment"; }
     private boolean unanswered(HealthAssessment a) { return blank(a.getFeelingWell())||blank(a.getHasFever())||blank(a.getTakingMedication())||blank(a.getRecentSurgery())||blank(a.getPregnantOrBreastfeeding())||blank(a.getHighRiskExposure()); }
     private boolean yes(String v){return "YES".equalsIgnoreCase(v);} private boolean blank(String v){return v==null||v.isBlank();}
     private boolean loggedIn(HttpSession s){return s.getAttribute("userId")!=null;} private boolean admin(HttpSession s){return "ADMIN".equalsIgnoreCase(String.valueOf(s.getAttribute("role")));} private Long userId(HttpSession s){return ((Number)s.getAttribute("userId")).longValue();}

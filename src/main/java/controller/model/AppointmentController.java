@@ -30,8 +30,13 @@ public class AppointmentController {
     public String page(HttpSession s, Model m) {
         if (!logged(s)) return "redirect:/login";
         boolean isAdmin = admin(s);
-        m.addAttribute("admin", isAdmin); m.addAttribute("appointment", new Appointment());
+        m.addAttribute("admin", isAdmin); m.addAttribute("activePage", "appointments"); m.addAttribute("appointment", new Appointment());
         m.addAttribute("appointments", isAdmin ? appointments.findAllByOrderByAppointmentDateAscAppointmentTimeAsc() : appointments.findByUserIdOrderByAppointmentDateAscAppointmentTimeAsc(uid(s)));
+        if (!isAdmin) {
+            Long donorId = uid(s);
+            m.addAttribute("canSchedule", canScheduleDonation(donorId));
+            m.addAttribute("schedulingMessage", schedulingMessage(donorId));
+        }
         if (isAdmin) { m.addAttribute("donors", users.findByRoleIgnoreCaseOrderByLastNameAscFirstNameAsc("DONOR")); java.util.Map<Long,String> names=new java.util.HashMap<>();users.findByRoleIgnoreCaseOrderByLastNameAscFirstNameAsc("DONOR").forEach(u->names.put(u.getId(),u.getDonorId()+" · "+u.getFirstName()+" "+u.getLastName()));m.addAttribute("donorNames",names); }
         add(s, m); return "donation";
     }
@@ -39,6 +44,7 @@ public class AppointmentController {
     @PostMapping("/donation")
     public String create(Appointment a, HttpSession s, RedirectAttributes f) {
         if (!logged(s) || admin(s)) return "redirect:/dashboard";
+        if (!canScheduleDonation(uid(s))) { f.addFlashAttribute("error", "Complete a current eligible health assessment before scheduling another donation."); return "redirect:/donation"; }
         if (!validDate(a.getAppointmentDate(), a.getAppointmentTime())) { f.addFlashAttribute("error", "Choose a future date and a valid time."); return "redirect:/donation"; }
         a.setId(null); a.setUserId(uid(s)); a.setLocation(clean(a.getLocation()).isEmpty() ? "LifeLink Donation Center" : clean(a.getLocation())); a.setStatus("UPCOMING");
         appointments.save(a); f.addFlashAttribute("success", "Appointment scheduled."); return "redirect:/donation";
@@ -47,9 +53,11 @@ public class AppointmentController {
     @PostMapping("/donation/{id}/reschedule")
     public String reschedule(@PathVariable Long id, @RequestParam LocalDate appointmentDate, @RequestParam LocalTime appointmentTime,
                              @RequestParam(required=false) String location, HttpSession s, RedirectAttributes f) {
+        if (!logged(s)) return "redirect:/login";
         var found = appointments.findById(id);
         if (found.isEmpty() || (!admin(s) && !found.get().getUserId().equals(uid(s)))) return "redirect:/donation";
         Appointment a = found.get();
+        if (!admin(s) && !canScheduleDonation(uid(s))) { f.addFlashAttribute("error", "Complete a current eligible health assessment before rescheduling."); return "redirect:/donation"; }
         if (!validDate(appointmentDate, appointmentTime) || "COMPLETED".equalsIgnoreCase(a.getStatus()) || "CANCELLED".equalsIgnoreCase(a.getStatus())) {
             f.addFlashAttribute("error", "This appointment cannot be rescheduled to that date."); return "redirect:/donation";
         }
@@ -60,6 +68,7 @@ public class AppointmentController {
 
     @PostMapping("/donation/{id}/cancel")
     public String cancel(@PathVariable Long id, HttpSession s, RedirectAttributes f) {
+        if (!logged(s)) return "redirect:/login";
         var found = appointments.findById(id);
         if (found.isPresent() && (admin(s) || found.get().getUserId().equals(uid(s))) && !"COMPLETED".equalsIgnoreCase(found.get().getStatus())) {
             found.get().setStatus("CANCELLED"); appointments.save(found.get()); f.addFlashAttribute("success", "Appointment cancelled.");
@@ -106,9 +115,39 @@ public class AppointmentController {
     }
 
     private boolean validDate(LocalDate date, LocalTime time) { return date != null && !date.isBefore(LocalDate.now()) && time != null; }
+    private boolean canScheduleDonation(Long donorId) {
+        HealthAssessment assessment = assessments.findFirstByUserIdOrderBySubmittedAtDesc(donorId).orElse(null);
+        if (assessment == null || assessment.getSubmittedAt() == null || assessment.getReadinessScore() == null || assessment.getReadinessScore() < 70
+                || !"ELIGIBLE".equalsIgnoreCase(assessment.getEligibilityStatus())) return false;
+        Donation lastDonation = donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(donorId, "COMPLETED")
+                .stream().findFirst().orElse(null);
+        if (lastDonation == null) return true;
+        LocalDate donationDate = lastDonation.getDonationDate();
+        if (donationDate == null) return false;
+        LocalDate nextEligibleDate = lastDonation.getNextEligibleDate() == null ? donationDate.plusDays(90) : lastDonation.getNextEligibleDate();
+        return !nextEligibleDate.isAfter(LocalDate.now()) && assessment.getSubmittedAt() != null
+                && assessment.getSubmittedAt().toLocalDate().isAfter(donationDate);
+    }
+    private String schedulingMessage(Long donorId) {
+        HealthAssessment assessment = assessments.findFirstByUserIdOrderBySubmittedAtDesc(donorId).orElse(null);
+        if (assessment == null || assessment.getSubmittedAt() == null) return "Complete a health assessment before you can schedule a donation.";
+        Donation lastDonation = donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(donorId, "COMPLETED")
+                .stream().findFirst().orElse(null);
+        if (lastDonation != null) {
+            LocalDate donationDate = lastDonation.getDonationDate();
+            if (donationDate != null) {
+                LocalDate nextEligibleDate = lastDonation.getNextEligibleDate() == null ? donationDate.plusDays(90) : lastDonation.getNextEligibleDate();
+                if (nextEligibleDate.isAfter(LocalDate.now())) return "You may be eligible to donate again on " + nextEligibleDate + ".";
+                if (assessment.getSubmittedAt() == null || !assessment.getSubmittedAt().toLocalDate().isAfter(donationDate)) return "Complete a new health assessment after your last completed donation before scheduling again.";
+            }
+        }
+        return assessment.getReviewNotes() == null || assessment.getReviewNotes().isBlank()
+                ? "Your latest assessment is " + (assessment.getEligibilityStatus() == null ? "not yet eligible" : assessment.getEligibilityStatus()) + ". Review your answers or contact an administrator."
+                : assessment.getReviewNotes();
+    }
     private String clean(String value) { return value == null ? "" : value.trim(); }
     private boolean logged(HttpSession s) { return s.getAttribute("userId") != null; }
     private boolean admin(HttpSession s) { return "ADMIN".equalsIgnoreCase(String.valueOf(s.getAttribute("role"))); }
     private Long uid(HttpSession s) { return ((Number)s.getAttribute("userId")).longValue(); }
-    private void add(HttpSession s, Model m) { m.addAttribute("firstName", s.getAttribute("firstName")); }
+    private void add(HttpSession s, Model m) { m.addAttribute("firstName", s.getAttribute("firstName")); m.addAttribute("admin", admin(s)); }
 }

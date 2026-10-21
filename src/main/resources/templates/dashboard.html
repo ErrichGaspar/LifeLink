@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeLink | Donor Dashboard</title>
+    <title th:text="${admin ? 'LifeLink | Admin Dashboard' : 'LifeLink | Donor Dashboard'}">LifeLink | Dashboard</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -20,76 +20,7 @@
 
     <div class="app-shell">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-
-            <div class="donor-profile" id="profile" th:unless="${admin}">
-                <div class="big-avatar">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="profile-copy">
-                    <h3 th:text="${firstName != null ? firstName : 'Donor'}">Donor</h3>
-                    <p>Welcome back!</p>
-                </div>
-            </div>
-
-            <div class="admin-title" th:if="${admin}">ADMIN DASHBOARD</div>
-
-            <nav class="menu">
-                <a href="/dashboard" class="active">
-                    <i class="fa-solid fa-house"></i>
-                    <span th:text="${admin} ? 'Admin Dashboard' : 'Dashboard'">Dashboard</span>
-                </a>
-
-                <a href="/donors">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                    <span>Donor Information</span>
-                </a>
-
-                <a href="/assessment">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                    <span th:text="${admin} ? 'Donor Eligibility / Status' : 'Eligibility / Status'">Eligibility / Status</span>
-                </a>
-
-                <a href="/donation">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>Schedule Donation</span>
-                </a>
-
-                <a href="/reports">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <span>Donation History</span>
-                </a>
-
-                <a th:if="${!admin}" href="#appointment">
-                    <i class="fa-solid fa-phone-volume"></i>
-                    <span>Upcoming Appointment</span>
-                </a>
-
-                <a th:if="${admin}" href="/requests"><i class="fa-solid fa-droplet"></i><span>Blood Requests</span></a>
-                <a th:if="${!admin}" href="/requests">
-                    <i class="fa-solid fa-droplet"></i>
-                    <span>Blood Requests</span>
-                </a>
-
-                <a href="#profile">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </nav>
-
-            <div class="sidebar-tools">
-                <span>Dark mode</span>
-                <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-                    <span></span>
-                </button>
-            </div>
-
-            <a href="/logout" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span th:text="${admin} ? 'LOG OUT' : 'Logout'">Logout</span>
-            </a>
-        </aside>
+        <aside th:replace="~{fragments/sidebar :: sidebar(${admin}, ${activePage})}"></aside>
 
         <!-- MAIN CONTENT -->
         <main class="content">

@@ -205,6 +205,9 @@ public class DonorController {
     private void addSessionProfile(Model model, HttpSession session) {
         model.addAttribute("firstName", session.getAttribute("firstName"));
         model.addAttribute("lastName", session.getAttribute("lastName"));
+        boolean admin = isAdmin(session);
+        model.addAttribute("admin", admin);
+        model.addAttribute("activePage", admin ? "donors" : "profile");
     }
 
     private String donorFormError(Model model, HttpSession session, User donor,

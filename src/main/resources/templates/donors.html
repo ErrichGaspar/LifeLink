@@ -19,20 +19,7 @@
     </header>
 
     <div class="app-shell">
-        <aside class="sidebar">
-            <div class="donor-profile">
-                <div class="big-avatar"><i class="fa-solid fa-user"></i></div>
-                <div class="profile-copy"><h3 th:text="${firstName != null ? firstName : (admin ? 'Admin' : 'Donor')}">Donor</h3><p th:text="${admin ? 'Administrator' : 'Donor account'}">Donor account</p></div>
-            </div>
-            <nav class="menu">
-                <a href="/dashboard"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
-                <a href="/donors" class="active"><i class="fa-solid fa-users"></i><span th:text="${admin ? 'Donor Management' : 'Donor Information'}">Donor Information</span></a>
-                <a href="/assessment"><i class="fa-solid fa-heart-pulse"></i><span>Eligibility / Status</span></a>
-                <a href="/donation"><i class="fa-solid fa-calendar-days"></i><span>Schedule Donation</span></a>
-                <a href="/reports"><i class="fa-solid fa-file-lines"></i><span>Donation History</span></a>
-            </nav>
-            <a href="/logout" class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
-        </aside>
+        <aside th:replace="~{fragments/sidebar :: sidebar(${admin}, ${activePage})}"></aside>
 
         <main class="content donor-content">
             <div th:if="${success}" class="notice success" role="status" th:text="${success}">Saved successfully.</div>
