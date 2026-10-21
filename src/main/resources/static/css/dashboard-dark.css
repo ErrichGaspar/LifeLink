@@ -1,0 +1,213 @@
+/* Shared dark appearance for donor and admin workspace pages. Loaded after
+   page-specific styles so the theme stays consistent across every workflow. */
+body.dark-mode.dashboard-page {
+    --night: #111821;
+    --surface: #19232f;
+    --surface-raised: #202c3a;
+    --surface-soft: #263443;
+    --stroke: #344354;
+    --ink: #edf3f8;
+    --muted-ink: #afbdcb;
+    --accent: #ff7378;
+    --accent-soft: #432d35;
+    --good-bg: #203b32;
+    --good-ink: #8de0b1;
+    --warn-bg: #493a24;
+    --warn-ink: #f2cd82;
+    color-scheme: dark;
+    background: var(--night);
+    color: var(--ink);
+}
+
+body.dark-mode.dashboard-page .background-image::after {
+    background: linear-gradient(135deg, rgba(12, 19, 28, .94), rgba(17, 24, 33, .97));
+}
+
+body.dark-mode.dashboard-page .content {
+    background: rgba(17, 24, 33, .58);
+    color: var(--ink);
+}
+
+body.dark-mode.dashboard-page :is(.sidebar, .assessment-card, .profile-card, .donor-form,
+    .donor-list-card, .stat-card, .panel, .welcome-card, .admin-welcome, .request-panel,
+    .chart, .appointment-box) {
+    background: var(--surface);
+    border-color: var(--stroke);
+    color: var(--ink);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, .24);
+}
+
+body.dark-mode.dashboard-page .sidebar {
+    background: linear-gradient(180deg, #19232f, #151e29);
+    border-right-color: var(--stroke);
+}
+
+body.dark-mode.dashboard-page :is(h1, h2, h3, h4, strong, label, th, .profile-details strong,
+    .table-person strong, .stat-card h2, .welcome-copy strong) {
+    color: var(--ink);
+}
+
+body.dark-mode.dashboard-page :is(p, small, .eyebrow, .profile-details span, .result-count,
+    .assessment-card > p, .panel p, .stat-card small, .stat-card p, .welcome-copy p) {
+    color: var(--muted-ink);
+}
+
+body.dark-mode.dashboard-page .eyebrow,
+body.dark-mode.dashboard-page :is(.stat-card a, .panel-head a, .bottom-link) {
+    color: var(--accent);
+}
+
+body.dark-mode.dashboard-page :is(.menu a, .logout) {
+    color: var(--muted-ink);
+}
+
+body.dark-mode.dashboard-page .menu a:hover {
+    background: var(--surface-soft);
+    color: var(--ink);
+}
+
+body.dark-mode.dashboard-page .menu a.active {
+    background: linear-gradient(100deg, #6e303a, #512d38);
+    color: #fff4f3;
+    box-shadow: inset 3px 0 #ff8587;
+}
+
+body.dark-mode.dashboard-page .logout:hover {
+    background: #3d2931;
+    color: #ff9b9e;
+}
+
+body.dark-mode.dashboard-page :is(.donor-profile, .line, .history-row, .upcoming > div,
+    .admin-table-row, .table-wrap th, .table-wrap td) {
+    border-color: var(--stroke);
+}
+
+body.dark-mode.dashboard-page :is(.big-avatar, .icon-circle, .welcome-icon, .welcome-heart,
+    .request-icon, .date-box) {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+body.dark-mode.dashboard-page .date-box {
+    background: linear-gradient(#76313b 0 34%, #302b38 34%);
+    color: #fff;
+}
+
+body.dark-mode.dashboard-page :is(.question-grid > div, .profile-details > div,
+    .inventory-list em, .bars) {
+    background: var(--surface-raised);
+    border-color: var(--stroke);
+}
+
+body.dark-mode.dashboard-page :is(input:not([type="radio"]):not([type="checkbox"]), select, textarea) {
+    background: #121b25;
+    border-color: #435366;
+    color: var(--ink);
+    accent-color: var(--accent);
+}
+
+body.dark-mode.dashboard-page :is(input, select, textarea)::placeholder {
+    color: #8999aa;
+}
+
+body.dark-mode.dashboard-page :is(input, select, textarea):focus-visible {
+    border-color: var(--accent);
+    outline: 3px solid rgba(255, 115, 120, .2);
+}
+
+body.dark-mode.dashboard-page .table-wrap {
+    border-color: var(--stroke);
+    background: var(--surface);
+}
+
+body.dark-mode.dashboard-page .table-wrap th {
+    background: #263443;
+    color: #dce6ef;
+}
+
+body.dark-mode.dashboard-page .table-wrap td {
+    color: #c0ccd8;
+}
+
+body.dark-mode.dashboard-page .table-wrap tbody tr:hover {
+    background: rgba(255, 255, 255, .035);
+}
+
+body.dark-mode.dashboard-page :is(.primary-button, .request-button, .form-grid button) {
+    background: #b83c48;
+    border-color: #d45a63;
+    color: #fff;
+}
+
+body.dark-mode.dashboard-page :is(.primary-button, .request-button, .form-grid button):hover {
+    background: #cf4b56;
+    border-color: #ec777d;
+}
+
+body.dark-mode.dashboard-page :is(.secondary-button, .edit-action, .delete-action) {
+    background: var(--surface-raised);
+    border-color: var(--stroke);
+    color: #e4edf5;
+}
+
+body.dark-mode.dashboard-page .status-card {
+    background: var(--good-bg);
+    border: 1px solid #315b49;
+    color: var(--good-ink);
+}
+
+body.dark-mode.dashboard-page .notice {
+    background: var(--surface-raised);
+    border-color: var(--stroke);
+    color: var(--ink);
+}
+
+body.dark-mode.dashboard-page .notice.success {
+    background: var(--good-bg);
+    border-color: #315b49;
+    color: var(--good-ink);
+}
+
+body.dark-mode.dashboard-page .notice.error {
+    background: #482b31;
+    border-color: #78404a;
+    color: #ffb5b5;
+}
+
+body.dark-mode.dashboard-page :is(.blood-badge, .history-row > b, .admin-table-row b) {
+    background: var(--accent-soft);
+    color: #ff9b9e;
+}
+
+body.dark-mode.dashboard-page .theme-toggle {
+    background: #364456;
+    box-shadow: inset 0 0 0 1px #536579;
+}
+
+body.dark-mode.dashboard-page .theme-toggle span {
+    background: #f6d58b;
+    transform: translateX(27px);
+}
+
+body.dark-mode.dashboard-page .theme-toggle span::before {
+    content: "☾";
+    color: #354153;
+}
+
+body.dark-mode.dashboard-page :is(button, a, input, select, textarea):focus-visible {
+    outline: 3px solid rgba(255, 190, 112, .72);
+    outline-offset: 2px;
+}
+
+body.dark-mode.dashboard-page button:disabled {
+    background: #394553;
+    border-color: #4b5967;
+    color: #a2afbb;
+    opacity: .72;
+}
+
+@media (max-width: 700px) {
+    body.dark-mode.dashboard-page .sidebar {
+        background: #17212c;
+    }
+}
