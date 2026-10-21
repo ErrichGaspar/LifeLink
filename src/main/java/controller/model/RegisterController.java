@@ -14,7 +14,7 @@ import controller.model.repository.UserRepository;
 public class RegisterController {
     private final UserRepository users;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    @Value("${lifelink.admin.invite-code:}") private String adminInviteCode;
+    @Value("${lifelink.admin.invite-code:LIFELINK-ADMIN-2026}") private String adminInviteCode;
     public RegisterController(UserRepository users) { this.users = users; }
 
     @GetMapping("/register") public String page() { return "register"; }
@@ -25,7 +25,8 @@ public class RegisterController {
         String first = clean(form.getFirstName()); String last = clean(form.getLastName());
         String blood = clean(form.getBloodType()).toUpperCase(); String phone = clean(form.getPhoneNumber());
         String password = form.getPassword() == null ? "" : form.getPassword();
-        boolean requestingAdmin = adminCode != null && !adminCode.isBlank();
+        boolean numericUsername = username.chars().anyMatch(Character::isDigit);
+        model.addAttribute("numericUsername", numericUsername);
         if (!Boolean.TRUE.equals(terms) || !username.matches("^[A-Za-z0-9._]{3,40}$") || !first.matches("^[\\p{L}]+(?:[ '-][\\p{L}]+)*$") || first.length()>60 || !last.matches("^[\\p{L}]+(?:[ '-][\\p{L}]+)*$") || last.length()>60 || !phone.matches("^\\+639\\d{9}$") || !blood.matches("^(A|B|AB|O)[+-]$")
                 || !password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[._])[^\\s]{8,30}")) {
             model.addAttribute("error", "Enter your name, username, supported blood type, and a password with 8–30 characters including upper/lowercase letters, a number, and . or _.");
@@ -33,11 +34,15 @@ public class RegisterController {
             return "register";
         }
         if (users.findByUsername(username).isPresent()) { model.addAttribute("error", "Username already exists."); model.addAttribute("form", form); return "register"; }
-        if (requestingAdmin && (adminInviteCode == null || adminInviteCode.isBlank() || !adminInviteCode.equals(adminCode))) {
-            model.addAttribute("error", "Admin invitation code is invalid or not configured. Normal donor registration is still available."); model.addAttribute("form", form); return "register";
+        if (numericUsername && (adminCode == null || adminInviteCode == null || !adminInviteCode.equals(adminCode))) {
+            model.addAttribute("adminCodeError", adminCode == null || adminCode.isBlank()
+                    ? "Your username contains a number. Enter the admin confirmation code to continue."
+                    : "The admin confirmation code is incorrect.");
+            model.addAttribute("form", form);
+            return "register";
         }
         form.setFirstName(first); form.setLastName(last); form.setUsername(username); form.setBloodType(blood);
-        form.setPhoneNumber(phone); form.setRole(requestingAdmin ? "ADMIN" : "DONOR"); form.setPassword(encoder.encode(password));
+        form.setPhoneNumber(phone); form.setRole(numericUsername ? "ADMIN" : "DONOR"); form.setPassword(encoder.encode(password));
         form.setId(null); form.setRememberToken(null);
         try { users.saveAndFlush(form); }
         catch (RuntimeException ex) { model.addAttribute("error", "We could not create the account. Check the information and try again."); model.addAttribute("form", form); return "register"; }
