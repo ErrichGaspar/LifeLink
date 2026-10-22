@@ -57,8 +57,7 @@ public class DonorController {
             for (User item : donors) {
                 String current = assessments.findFirstByUserIdOrderBySubmittedAtDesc(item.getId()).map(a -> a.getEligibilityStatus()).orElse("Not assessed");
                 java.time.LocalDate last = donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(item.getId(), "COMPLETED").stream().map(d -> d.getDonationDate()).filter(java.util.Objects::nonNull).findFirst().orElse(null);
-                if (last != null && last.plusDays(90).isAfter(java.time.LocalDate.now())) current = "IN PROCESS";
-                else current = assessments.findFirstByUserIdOrderBySubmittedAtDesc(item.getId()).map(a -> a.getReadinessScore()==null?a.getEligibilityStatus():a.getReadinessScore()>=70?"ELIGIBLE":a.getReadinessScore()>=45?"IN PROCESS":"NOT ELIGIBLE").orElse("Not assessed");
+                current = assessments.findFirstByUserIdOrderBySubmittedAtDesc(item.getId()).map(a -> a.getEligibilityStatus()==null?"IN_PROGRESS":a.getEligibilityStatus()).orElse("IN_PROGRESS");
                 eligibility.put(item.getId(), current); if (last != null) latestDonation.put(item.getId(), last.toString());
             }
             model.addAttribute("eligibility", eligibility); model.addAttribute("latestDonation", latestDonation);

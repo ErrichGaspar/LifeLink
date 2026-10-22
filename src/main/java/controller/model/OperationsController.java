@@ -34,7 +34,7 @@ public class OperationsController {
         User donor=d.getUserId()==null?null:users.findByIdForUpdate(d.getUserId()).filter(u->"DONOR".equalsIgnoreCase(u.getRole())).orElse(null);
         if(donor==null||d.getDonationDate()==null||d.getDonationDate().isAfter(LocalDate.now())||d.getUnits()==null||d.getUnits()<1||d.getUnits()>10||!validType(donor.getBloodType())){f.addFlashAttribute("error","Choose a donor, a valid past or current date, and 1–10 collected bags.");return "redirect:/records";}
         if(donations.existsByUserIdAndDonationDate(donor.getId(),d.getDonationDate())){f.addFlashAttribute("error","This donor already has a donation recorded for that date.");return "redirect:/records";}
-        d.setId(null);d.setAppointmentId(null);d.setBloodType(donor.getBloodType());d.setStatus("COMPLETED");d.setNextEligibleDate(d.getDonationDate().plusDays(90));d.setInventoryAccepted(false);donations.save(d);
+        d.setId(null);d.setAppointmentId(null);d.setBloodType(donor.getBloodType());d.setStatus("COMPLETED");d.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Asia/Manila")));d.setDonationDate(d.getCompletedAt().toLocalDate());d.setNextEligibleDate(d.getDonationDate().plusDays(90));d.setInventoryAccepted(false);donations.save(d);
         f.addFlashAttribute("success","Donation recorded in history. Collected bags are awaiting inventory acceptance.");return "redirect:/records";
     }
     @PostMapping("/records/{id}/accept") @Transactional public String acceptDonation(@PathVariable Long id,HttpSession s,RedirectAttributes f) {
