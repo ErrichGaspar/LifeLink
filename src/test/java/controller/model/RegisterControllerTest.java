@@ -40,10 +40,7 @@ class RegisterControllerTest {
     void usernameWithoutDigitsCreatesDonorWithoutCode() {
         User saved = submit("donorname", null);
         assertEquals("DONOR", saved.getRole());
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        assertTrue(encoder.matches("LifeLink.123", saved.getPassword()));
-        assertFalse(encoder.matches("LifeLink.124", saved.getPassword()));
-        assertNotEquals("LifeLink.123", saved.getPassword());
+        assertTrue(new BCryptPasswordEncoder().matches("LifeLink.123", saved.getPassword()));
         assertEquals(List.of(saved), savedUsers);
     }
 

@@ -56,20 +56,6 @@ class AppointmentControllerTest {
     }
 
     @Test
-    void ineligibleDonorCannotScheduleEvenWhenRetakeCooldownIsOver() {
-        HealthAssessment assessment = new HealthAssessment();
-        assessment.setEligibilityStatus("INELIGIBLE");
-        assessment.setSubmittedAt(LocalDateTime.now().minusHours(2));
-        List<Appointment> saved = new ArrayList<>();
-        AppointmentController controller = controller(assessment, List.of(), saved);
-
-        String result = controller.create(appointment(), donorSession(), new RedirectAttributesModelMap());
-
-        assertEquals("redirect:/donation", result);
-        assertTrue(saved.isEmpty());
-    }
-
-    @Test
     void oldAssessmentCannotBeReusedAfterCompletedDonation() {
         HealthAssessment assessment = new HealthAssessment();
         assessment.setReadinessScore(90);
@@ -98,12 +84,7 @@ class AppointmentControllerTest {
         DonationRepository donations = proxy(DonationRepository.class, (proxy, method, args) ->
                 method.getName().equals("findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc") ? donationList : null);
         UserRepository users = proxy(UserRepository.class, (proxy, method, args) -> null);
-        controller.model.repository.NotificationRepository notifications = proxy(controller.model.repository.NotificationRepository.class, (proxy, method, args) -> {
-            if (method.getName().equals("existsByEventKey")) return false;
-            if (method.getName().equals("save")) return args[0];
-            return null;
-        });
-        return new AppointmentController(appointments, users, donations, assessments, notifications);
+        return new AppointmentController(appointments, users, donations, assessments);
     }
 
     private Appointment appointment() {

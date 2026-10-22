@@ -27,7 +27,6 @@ public class HealthAssessment {
     private Integer readinessScore;
     private String reviewNotes;
     private LocalDateTime submittedAt;
-    private LocalDateTime retakeAllowedAt;
     public Long getId() { return id; } public void setId(Long id) { this.id = id; }
     public Long getUserId() { return userId; } public void setUserId(Long userId) { this.userId = userId; }
     public LocalDate getBirthDate() { return birthDate; } public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
@@ -42,5 +41,4 @@ public class HealthAssessment {
     public Integer getReadinessScore() { return readinessScore; } public void setReadinessScore(Integer value) { this.readinessScore = value; }
     public String getReviewNotes() { return reviewNotes; } public void setReviewNotes(String value) { this.reviewNotes = value; }
     public LocalDateTime getSubmittedAt() { return submittedAt; } public void setSubmittedAt(LocalDateTime value) { this.submittedAt = value; }
-    public LocalDateTime getRetakeAllowedAt() { return retakeAllowedAt; } public void setRetakeAllowedAt(LocalDateTime value) { this.retakeAllowedAt = value; }
 }

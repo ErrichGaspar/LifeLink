@@ -28,8 +28,8 @@ public class HomeController {
         List<Donation> donorHistory=donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(userId,"COMPLETED");
         m.addAttribute("assessment",latestAssessment);m.addAttribute("donationHistory",donorHistory);m.addAttribute("totalDonations",donorHistory.size());
         LocalDate nextEligible=donorHistory.stream().map(d->d.getNextEligibleDate()!=null?d.getNextEligibleDate():(d.getDonationDate()==null?null:d.getDonationDate().plusDays(90))).filter(Objects::nonNull).findFirst().orElse(null);
-        String eligibility=latestAssessment==null?"IN_PROGRESS":latestAssessment.getEligibilityStatus();
-        m.addAttribute("currentEligibility",eligibility==null?"IN_PROGRESS":eligibility);
+        String eligibility=latestAssessment==null||latestAssessment.getReadinessScore()==null?"In Process":latestAssessment.getReadinessScore()>=70?"ELIGIBLE":latestAssessment.getReadinessScore()>=45?"IN PROCESS":"NOT ELIGIBLE";
+        m.addAttribute("currentEligibility",nextEligible!=null&&nextEligible.isAfter(LocalDate.now())?"IN PROCESS":eligibility);
         m.addAttribute("bloodRequests",admin?requests.findAllByOrderByCreatedAtDesc():requests.findByRequesterIdOrderByCreatedAtDesc(userId));
         if(admin){
             List<Appointment> upcoming=appointments.findAllByOrderByAppointmentDateAscAppointmentTimeAsc().stream().filter(a->a.getAppointmentDate()!=null&&!a.getAppointmentDate().isBefore(LocalDate.now())&&List.of("UPCOMING","CONFIRMED").contains(String.valueOf(a.getStatus()).toUpperCase())).toList();

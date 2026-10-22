@@ -21,10 +21,9 @@ public class AppointmentController {
     private final UserRepository users;
     private final DonationRepository donations;
     private final HealthAssessmentRepository assessments;
-    private final NotificationRepository notifications;
 
-    public AppointmentController(AppointmentRepository a, UserRepository u, DonationRepository d, HealthAssessmentRepository h, NotificationRepository n) {
-        appointments = a; users = u; donations = d; assessments = h; notifications = n;
+    public AppointmentController(AppointmentRepository a, UserRepository u, DonationRepository d, HealthAssessmentRepository h) {
+        appointments = a; users = u; donations = d; assessments = h;
     }
 
     @GetMapping("/donation")
@@ -101,13 +100,14 @@ public class AppointmentController {
             }
             User donor = users.findById(a.getUserId()).filter(u -> "DONOR".equalsIgnoreCase(u.getRole())).orElse(null);
             if (donor == null || donor.getBloodType() == null || !donor.getBloodType().matches("^(A|B|AB|O)[+-]$")) { f.addFlashAttribute("error", "The appointment donor or blood type is invalid."); return "redirect:/donation"; }
-            LocalDateTime completedAt = LocalDateTime.now(java.time.ZoneId.of("Asia/Manila"));
-            Donation donation = new Donation(); donation.setUserId(donor.getId()); donation.setAppointmentId(id); donation.setDonationDate(completedAt.toLocalDate()); donation.setCompletedAt(completedAt);
+            Donation donation = new Donation(); donation.setUserId(donor.getId()); donation.setAppointmentId(id); donation.setDonationDate(a.getAppointmentDate());
             donation.setBloodType(donor.getBloodType()); donation.setUnits(collectedUnits); donation.setLocation(a.getLocation());
-            donation.setStatus("COMPLETED"); donation.setNextEligibleDate(completedAt.toLocalDate().plusDays(90)); donation.setInventoryAccepted(false);
+            donation.setStatus("COMPLETED"); donation.setNextEligibleDate(a.getAppointmentDate().plusDays(90)); donation.setInventoryAccepted(false);
             donations.save(donation);
-            notifyOnce(donor.getId(), "DONOR", "Donation completed", "Your donation was recorded as successfully completed.", "DONATION_COMPLETED", "donation-donor-"+donation.getId(), donation.getId());
-            notifyOnce(null, "ADMIN", "Successful donation completed", donor.getFirstName()+" "+donor.getLastName()+" completed a donation (record "+donation.getId()+").", "DONATION_COMPLETED", "donation-admin-"+donation.getId(), donation.getId());
+            assessments.findFirstByUserIdOrderBySubmittedAtDesc(donor.getId()).ifPresent(assessment -> {
+                if (assessment.getEligibilityStatus() != null && "ELIGIBLE".equalsIgnoreCase(assessment.getEligibilityStatus())) assessment.setEligibilityStatus("IN PROCESS");
+                assessments.save(assessment);
+            });
             a.setCollectedUnits(collectedUnits);
         }
         a.setStatus(next); appointments.save(a); f.addFlashAttribute("success", "Appointment updated." + ("COMPLETED".equals(next) ? " Donation recorded in history; inventory awaits acceptance." : ""));
@@ -117,17 +117,16 @@ public class AppointmentController {
     private boolean validDate(LocalDate date, LocalTime time) { return date != null && !date.isBefore(LocalDate.now()) && time != null; }
     private boolean canScheduleDonation(Long donorId) {
         HealthAssessment assessment = assessments.findFirstByUserIdOrderBySubmittedAtDesc(donorId).orElse(null);
-        if (assessment == null || assessment.getSubmittedAt() == null || !"ELIGIBLE".equalsIgnoreCase(assessment.getEligibilityStatus())) return false;
+        if (assessment == null || assessment.getSubmittedAt() == null || assessment.getReadinessScore() == null || assessment.getReadinessScore() < 70
+                || !"ELIGIBLE".equalsIgnoreCase(assessment.getEligibilityStatus())) return false;
         Donation lastDonation = donations.findByUserIdAndStatusIgnoreCaseOrderByDonationDateDesc(donorId, "COMPLETED")
                 .stream().findFirst().orElse(null);
         if (lastDonation == null) return true;
         LocalDate donationDate = lastDonation.getDonationDate();
         if (donationDate == null) return false;
         LocalDate nextEligibleDate = lastDonation.getNextEligibleDate() == null ? donationDate.plusDays(90) : lastDonation.getNextEligibleDate();
-        LocalDateTime completedAt = lastDonation.getCompletedAt() == null ? donationDate.atStartOfDay() : lastDonation.getCompletedAt();
-        return !nextEligibleDate.isAfter(LocalDate.now(java.time.ZoneId.of("Asia/Manila")))
-                && !completedAt.plusHours(1).isAfter(LocalDateTime.now(java.time.ZoneId.of("Asia/Manila")))
-                && assessment.getSubmittedAt().isAfter(completedAt);
+        return !nextEligibleDate.isAfter(LocalDate.now()) && assessment.getSubmittedAt() != null
+                && assessment.getSubmittedAt().toLocalDate().isAfter(donationDate);
     }
     private String schedulingMessage(Long donorId) {
         HealthAssessment assessment = assessments.findFirstByUserIdOrderBySubmittedAtDesc(donorId).orElse(null);
@@ -151,5 +150,4 @@ public class AppointmentController {
     private boolean admin(HttpSession s) { return "ADMIN".equals(RoleNames.canonical(String.valueOf(s.getAttribute("role")))); }
     private Long uid(HttpSession s) { return ((Number)s.getAttribute("userId")).longValue(); }
     private void add(HttpSession s, Model m) { m.addAttribute("firstName", s.getAttribute("firstName")); m.addAttribute("admin", admin(s)); }
-    private void notifyOnce(Long userId,String role,String title,String message,String type,String key,Long ref){if(!notifications.existsByEventKey(key)){Notification n=new Notification();n.setRecipientUserId(userId);n.setRecipientRole(role);n.setTitle(title);n.setMessage(message);n.setEventType(type);n.setEventKey(key);n.setReferenceId(ref);n.setCreatedAt(LocalDateTime.now(java.time.ZoneId.of("Asia/Manila")));notifications.save(n);}}
 }
